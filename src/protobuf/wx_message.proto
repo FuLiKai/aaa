@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package wpb;
+
+
+message WxSession {
+    int32 sessionId = 1;
+    string wxId = 2;
+    string chatId = 3;
+    string headImg = 4;
+    string nickname = 5;
+    int32 status = 6;
+}
+
+message WxMessage {
+    int32 sessionId = 1;
+    string fromWxId = 2;
+    string toWxId = 3;
+    int32 msgType = 4;
+    string rawMsg = 5;
+}
+
+message GetWxSessionListRequest {   // 获取用户会话列表
+    int32 start = 1;
+    int32 limit = 2;
+    string wxId = 3;
+}
+
+message GetWxSessionListResponse {
+    repeated WxSession list = 1;
+    int32 nextId = 2;
+}
+
+message GetWxMessageListRequest {   //获取会话消息列表
+    int32 start = 1;
+    int32 limit = 2;
+    int32 sessionId = 3;
+}
+
+message GetWxMessageListResponse {
+    repeated WxMessage list = 1;
+    int32 nextId = 2;
+}

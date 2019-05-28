@@ -1,0 +1,243 @@
+{
+    "nextId": 1,
+    "list": [
+        {
+            "ip": "192.168.10.27",
+            "accountList": [
+                {
+                    "account": {
+                        "id": "001",
+                        "nickname": "。",
+                        "wxAlias": "FLK_or_LKFu",
+                        "login": true
+                    }
+                },
+                {
+                    "account": {
+                        "id": "002",
+                        "nickname": "大神",
+                        "wxAlias": "ddcdwikljljf",
+                        "login": true
+                    }
+                },
+                {
+                    "account": {
+                        "id": "003",
+                        "nickname": "ydd",
+                        "wxAlias": "jkjalncda",
+                        "login": false
+                    }
+                },
+                {
+                    "account": {
+                        "id": "004",
+                        "nickname": "菜鸟。",
+                        "wxAlias": "jklsjdasj",
+                        "login": true
+                    }
+                },
+                {
+                    "account": {
+                        "id": "005",
+                        "nickname": "菜鸟wqe。",
+                        "wxAlias": "jklsjdasj",
+                        "login": true
+                    }
+                },
+                {
+                    "account": {
+                        "id": "006",
+                        "nickname": "菜鸟wqe。",
+                        "wxAlias": "jklsjdasj",
+                        "login": true
+                    }
+                }
+            ]
+        },
+        {
+            "ip": "192.168.10.28",
+            "accountList": [
+                {
+                    "account": {
+                        "id": "001",
+                        "nickname": "。",
+                        "wxAlias": "FLK_or_LKFu",
+                        "login": true
+                    }
+                },
+                {
+                    "account": {
+                        "id": "002",
+                        "nickname": "大神",
+                        "wxAlias": "ddcdwikljljf",
+                        "login": true
+                    }
+                },
+                {
+                    "account": {
+                        "id": "003",
+                        "nickname": "ydd",
+                        "wxAlias": "jkjalncda",
+                        "login": false
+                    }
+                },
+                {
+                    "account": {
+                        "id": "004",
+                        "nickname": "菜鸟。",
+                        "wxAlias": "jklsjdasj",
+                        "login": true
+                    }
+                }
+            ]
+        },
+        {
+            "ip": "192.168.10.29",
+            "accountList": [
+                {
+                    "account": {
+                        "id": "001",
+                        "nickname": "。",
+                        "wxAlias": "FLK_or_LKFu",
+                        "login": true
+                    }
+                },
+                {
+                    "account": {
+                        "id": "002",
+                        "nickname": "大神",
+                        "wxAlias": "ddcdwikljljf",
+                        "login": true
+                    }
+                },
+                {
+                    "account": {
+                        "id": "003",
+                        "nickname": "ydd",
+                        "wxAlias": "jkjalncda",
+                        "login": false
+                    }
+                },
+                {
+                    "account": {
+                        "id": "004",
+                        "nickname": "菜鸟。",
+                        "wxAlias": "jklsjdasj",
+                        "login": true
+                    }
+                }
+            ]
+        },
+        {
+            "ip": "192.168.10.21",
+            "accountList": [
+                {
+                    "account": {
+                        "id": "001",
+                        "nickname": "。",
+                        "wxAlias": "FLK_or_LKFu",
+                        "login": true
+                    }
+                },
+                {
+                    "account": {
+                        "id": "002",
+                        "nickname": "大神",
+                        "wxAlias": "ddcdwikljljf",
+                        "login": true
+                    }
+                },
+                {
+                    "account": {
+                        "id": "003",
+                        "nickname": "ydd",
+                        "wxAlias": "jkjalncda",
+                        "login": false
+                    }
+                },
+                {
+                    "account": {
+                        "id": "004",
+                        "nickname": "菜鸟。",
+                        "wxAlias": "jklsjdasj",
+                        "login": true
+                    }
+                }
+            ]
+        },
+        {
+            "ip": "192.168.10.22",
+            "accountList": [
+                {
+                    "account": {
+                        "id": "001",
+                        "nickname": "。",
+                        "wxAlias": "FLK_or_LKFu",
+                        "login": true
+                    }
+                },
+                {
+                    "account": {
+                        "id": "002",
+                        "nickname": "大神",
+                        "wxAlias": "ddcdwikljljf",
+                        "login": true
+                    }
+                },
+                {
+                    "account": {
+                        "id": "003",
+                        "nickname": "ydd",
+                        "wxAlias": "jkjalncda",
+                        "login": false
+                    }
+                },
+                {
+                    "account": {
+                        "id": "004",
+                        "nickname": "菜鸟。",
+                        "wxAlias": "jklsjdasj",
+                        "login": true
+                    }
+                }
+            ]
+        },
+        {
+            "ip": "192.168.10.23",
+            "accountList": [
+                {
+                    "account": {
+                        "id": "001",
+                        "nickname": "。",
+                        "wxAlias": "FLK_or_LKFu",
+                        "login": true
+                    }
+                },
+                {
+                    "account": {
+                        "id": "002",
+                        "nickname": "大神",
+                        "wxAlias": "ddcdwikljljf",
+                        "login": true
+                    }
+                },
+                {
+                    "account": {
+                        "id": "003",
+                        "nickname": "ydd",
+                        "wxAlias": "jkjalncda",
+                        "login": false
+                    }
+                },
+                {
+                    "account": {
+                        "id": "004",
+                        "nickname": "菜鸟。",
+                        "wxAlias": "jklsjdasj",
+                        "login": true
+                    }
+                }
+            ]
+        }
+    ]
+}

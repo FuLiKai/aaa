@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package wpb;
+
+message BaseRequest {
+    int32 cmdId = 1;
+    string wxid = 2;
+    int64 seq = 3;
+    bytes data = 4;
+}
+
+message BaseResponse {
+    int32 ret = 1;
+    string errMsg = 2;
+    int64 seq = 3;
+    bytes data = 4;
+}
+
+message SendTextRequest {
+    string wxid = 1;
+    string content = 2;
+}
+
+// 用户基本信息
+message ModUserInfo {
+    string userName = 1; //微信ID
+    string alias = 2; //微信号
+    string nickName = 3; //昵称
+    string remarkName = 4; //备注名称
+    string headImg = 5; // 头像
+    int32 sex = 6; //性别
+    string country = 7; //国籍
+    string province = 8; //省份
+    string city = 9; //城市
+    string label = 10; //标签
+}
+
+// 获取好友列表
+message GetFriendsRequest {
+    string wxid = 1;
+}
+
+// 获取好友列表结果
+message GetFriendsResponse {
+    repeated ModUserInfo List = 1;
+}
+

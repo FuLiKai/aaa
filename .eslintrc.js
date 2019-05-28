@@ -57,7 +57,7 @@ module.exports = {
         "react/jsx-curly-spacing": [2, {"when": "never", "children": true}], 
         "react/jsx-indent-props": [2, 4], 
         "react/jsx-key": 2, 
-        "react/jsx-max-props-per-line": [1, {"maximum": 1}],
+        // "react/jsx-max-props-per-line": [1, {"maximum": 1}],
         "react/jsx-no-bind": 0, 
         "react/jsx-no-duplicate-props": 2, 
         "react/jsx-no-literals": 0,
