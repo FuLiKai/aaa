@@ -1,0 +1,56 @@
+.message-box.message-scroll-wrapper {
+    height: 522px;
+    overflow: auto;
+    font-size: 14px;
+    color: #000;
+    .message-list {
+        padding: 0 20px;  
+        .message-item {
+            display: flex;
+            margin-bottom: 16px;
+            width: 100%;
+            .message-avatar {
+                width: 40px;
+                height: 40px;
+            }
+            .message-text-wrapper {
+                position: relative;
+                padding: 9px 13px;
+                border-radius: 3px;
+                margin: 0 10px;
+                max-width: 500px;
+                &::before {
+                    position: absolute;
+                    top: 14px;
+                    border: 6px solid transparent;
+                    content: " ";
+                }
+                .message-text {
+                    font-family: Helvetica Neue,Helvetica,Hiragino Sans GB,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,Arial,sans-serif;
+                    margin: 0;
+                    white-space: pre-wrap;
+                    word-break: normal;
+                }
+            }
+            &.self {
+                flex-direction: row-reverse;
+                .message-text-wrapper {
+                    background: #b2e281;
+                    &::before { 
+                        left: 100%;
+                        border-left: 6px solid #b2e281;
+                    }
+                }   
+            }
+            &.other {
+                .message-text-wrapper {
+                    background: #fff;
+                    &::before { 
+                        border-right: 6px solid #fff;
+                        right: 100%;
+                    }
+                }   
+            }
+        }
+    }
+}

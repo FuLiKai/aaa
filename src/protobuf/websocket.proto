@@ -12,8 +12,9 @@ message BaseRequest {
 message BaseResponse {
     int32 ret = 1;
     string errMsg = 2;
-    int64 seq = 3;
-    bytes data = 4;
+    int32 cmdId = 3;
+    int64 seq = 4;
+    bytes data = 5;
 }
 
 message SendTextRequest {

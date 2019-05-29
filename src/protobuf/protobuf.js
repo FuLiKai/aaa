@@ -35,13 +35,17 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                             type: 'string',
                             id: 2
                         },
+                        cmdId: {
+                            type: 'int32',
+                            id: 3
+                        },
                         seq: {
                             type: 'int64',
-                            id: 3
+                            id: 4
                         },
                         data: {
                             type: 'bytes',
-                            id: 4
+                            id: 5
                         }
                     }
                 },

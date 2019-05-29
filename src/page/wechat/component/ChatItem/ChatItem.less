@@ -1,0 +1,29 @@
+.chat-item {
+    display: flex;
+    font-size: 13px;
+    padding: 12px 0;
+    .chat-item-avatar {
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+        flex: 0 0 auto;
+    }
+    .chat-item-text-box {
+        flex: auto;
+        .chat-item-name {
+            .ellipsis();
+            display: block;
+            color: #fff;
+            max-width: 160px;
+        }
+        .chat-item-msg {
+            .ellipsis();
+            display: block;
+            color: #989898; 
+            max-width: 160px;
+        }
+    }
+    .chat-item-time {
+        color: #989898;
+    }
+}
