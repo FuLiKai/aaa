@@ -3,6 +3,17 @@
     overflow: auto;
     font-size: 14px;
     color: #000;
+    &::-webkit-scrollbar {
+        display: block;
+        width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background-color: #c3c3c3;
+    }
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
     .message-list {
         padding: 0 20px;  
         .message-item {
@@ -29,7 +40,7 @@
                     font-family: Helvetica Neue,Helvetica,Hiragino Sans GB,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,Arial,sans-serif;
                     margin: 0;
                     white-space: pre-wrap;
-                    word-break: normal;
+                    word-break: break-word;
                 }
             }
             &.self {

@@ -4,9 +4,10 @@ package wpb;
 
 message BaseRequest {
     int32 cmdId = 1;
-    string wxid = 2;
+    string wxId = 2;
     int64 seq = 3;
     bytes data = 4;
+    string shortWxId = 5;
 }
 
 message BaseResponse {
@@ -15,11 +16,6 @@ message BaseResponse {
     int32 cmdId = 3;
     int64 seq = 4;
     bytes data = 5;
-}
-
-message SendTextRequest {
-    string wxid = 1;
-    string content = 2;
 }
 
 // 用户基本信息
@@ -35,14 +31,3 @@ message ModUserInfo {
     string city = 9; //城市
     string label = 10; //标签
 }
-
-// 获取好友列表
-message GetFriendsRequest {
-    string wxid = 1;
-}
-
-// 获取好友列表结果
-message GetFriendsResponse {
-    repeated ModUserInfo List = 1;
-}
-

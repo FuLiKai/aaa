@@ -30,7 +30,7 @@ module.exports = {
         "no-irregular-whitespace": 0, 
         "no-trailing-spaces": 1, 
         "eol-last": 0, 
-        "no-unused-vars": [2, {"vars": "all", "args": "after-used"}],
+        "no-unused-vars": [0, {"vars": "all", "args": "after-used"}],
         "no-underscore-dangle": 0,
         "no-lone-blocks": 0,
         "no-class-assign": 2,

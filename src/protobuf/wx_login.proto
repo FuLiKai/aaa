@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package wpb;
+
+
+message GetLoginQrcodeRequest {
+    string wxId = 1;
+}
+
+message GetLoginQrcodeResponse {
+    bytes code = 1;
+}
+
+message GetLoginStatusRequest {
+    string wxId = 1;
+}
+
+message GetLoginStatusResponse {
+    int32 status = 1;
+}
+
+message CheckLoginQrcodeRequest {
+    string wxId = 1;
+}
+
+message CheckLoginQrcodeResponse {
+    string wxId = 1;
+    int32 status = 2;
+    string nickName = 3;
+    string headImg = 4;
+    int32 expiredTime = 5;
+}

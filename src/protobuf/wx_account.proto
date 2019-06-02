@@ -111,3 +111,21 @@ message GetWxClientListResponse {
     repeated WxClients list = 1;
     int32 NextId = 2;
 }
+
+message AgreeFriendApplyRequest {
+    string fromWxId = 1;
+    string toWxId = 2;
+    string ticket = 3;
+}
+
+message AgreeFriendApplyResponse {
+
+}
+
+message GetAccountDetailRequest {
+    string wxId = 1;
+}
+
+message GetAccountDetailResponse {
+    WxAccountDetail detail = 1;
+}

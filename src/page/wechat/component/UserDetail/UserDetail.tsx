@@ -4,36 +4,42 @@ import './UserDetail.less';
 
 interface Prop {
     userInfo: {
-        avatar: string,
-        sex: boolean,
+        wxId: string,
+        wxAlias: string,
         nickname: string,
-        alias: string,
-        area: string,
-        signature: string,
-        userType: number
-    }
+        remarkName: string,
+        headImg: string,
+        sex: number,
+        country: string,
+        province: string,
+        city: string,
+        labelId: string
+    },
+    onClick: (wxId: string) => any
 }
 
 function UserDetail (props: Prop) {
     let {
-        avatar,
-        sex,
+        wxId,
         nickname,
-        alias,
-        area,
-        signature
+        remarkName,
+        headImg,
+        sex,
+        country,
+        province,
+        city
     } = props.userInfo;
     return (
         <div className="user-detail">
-            <img className="user-detail-avarar" src={avatar}/>
+            <img className="user-detail-avarar" src={headImg}/>
             <div className="user-detail-nickname">
-                <span>{alias || nickname}</span>
-                <span className="user-detail-sex">{sex ? '男' : '女'}</span>
+                <span>{remarkName || nickname}</span>
+                <span className="user-detail-sex">{sex === 1 ? '男' : sex === 2 ? '女' : ''}</span>
             </div>
-            <span className="user-detail-signature">{signature}</span>
-            <span className="user-detail-alias">{`备注: ${alias}`}</span>
-            <span className="user-detail-area">{`地区: ${area}`}</span>
-            <Button type="primary">发消息</Button>
+            {/* <span className="user-detail-signature">{signature}</span> */}
+            <span className="user-detail-alias">{`备注: ${remarkName}`}</span>
+            <span className="user-detail-area">{`地区: ${country + province + city}`}</span>
+            <Button onClick={() => props.onClick(props.userInfo.wxId)} type="primary">发消息</Button>
         </div>
     );
 }

@@ -11,7 +11,7 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                             type: 'int32',
                             id: 1
                         },
-                        wxid: {
+                        wxId: {
                             type: 'string',
                             id: 2
                         },
@@ -22,6 +22,10 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         data: {
                             type: 'bytes',
                             id: 4
+                        },
+                        shortWxId: {
+                            type: 'string',
+                            id: 5
                         }
                     }
                 },
@@ -46,18 +50,6 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         data: {
                             type: 'bytes',
                             id: 5
-                        }
-                    }
-                },
-                SendTextRequest: {
-                    fields: {
-                        wxid: {
-                            type: 'string',
-                            id: 1
-                        },
-                        content: {
-                            type: 'string',
-                            id: 2
                         }
                     }
                 },
@@ -102,23 +94,6 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         label: {
                             type: 'string',
                             id: 10
-                        }
-                    }
-                },
-                GetFriendsRequest: {
-                    fields: {
-                        wxid: {
-                            type: 'string',
-                            id: 1
-                        }
-                    }
-                },
-                GetFriendsResponse: {
-                    fields: {
-                        List: {
-                            rule: 'repeated',
-                            type: 'ModUserInfo',
-                            id: 1
                         }
                     }
                 },
@@ -432,6 +407,105 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         }
                     }
                 },
+                AgreeFriendApplyRequest: {
+                    fields: {
+                        fromWxId: {
+                            type: 'string',
+                            id: 1
+                        },
+                        toWxId: {
+                            type: 'string',
+                            id: 2
+                        },
+                        ticket: {
+                            type: 'string',
+                            id: 3
+                        }
+                    }
+                },
+                AgreeFriendApplyResponse: {
+                    fields: {}
+                },
+                GetAccountDetailRequest: {
+                    fields: {
+                        wxId: {
+                            type: 'string',
+                            id: 1
+                        }
+                    }
+                },
+                GetAccountDetailResponse: {
+                    fields: {
+                        detail: {
+                            type: 'WxAccountDetail',
+                            id: 1
+                        }
+                    }
+                },
+                GetLoginQrcodeRequest: {
+                    fields: {
+                        wxId: {
+                            type: 'string',
+                            id: 1
+                        }
+                    }
+                },
+                GetLoginQrcodeResponse: {
+                    fields: {
+                        code: {
+                            type: 'bytes',
+                            id: 1
+                        }
+                    }
+                },
+                GetLoginStatusRequest: {
+                    fields: {
+                        wxId: {
+                            type: 'string',
+                            id: 1
+                        }
+                    }
+                },
+                GetLoginStatusResponse: {
+                    fields: {
+                        status: {
+                            type: 'int32',
+                            id: 1
+                        }
+                    }
+                },
+                CheckLoginQrcodeRequest: {
+                    fields: {
+                        wxId: {
+                            type: 'string',
+                            id: 1
+                        }
+                    }
+                },
+                CheckLoginQrcodeResponse: {
+                    fields: {
+                        wxId: {
+                            type: 'string',
+                            id: 1
+                        },
+                        status: {
+                            type: 'int32',
+                            id: 2
+                        },
+                        nickName: {
+                            type: 'string',
+                            id: 3
+                        },
+                        headImg: {
+                            type: 'string',
+                            id: 4
+                        },
+                        expiredTime: {
+                            type: 'int32',
+                            id: 5
+                        }
+                    }
+                },
                 WxSession: {
                     fields: {
                         sessionId: {
@@ -539,6 +613,91 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         nextId: {
                             type: 'int32',
                             id: 2
+                        }
+                    }
+                },
+                SendTextRequest: {
+                    fields: {
+                        sessionId: {
+                            type: 'int32',
+                            id: 1
+                        },
+                        content: {
+                            type: 'string',
+                            id: 2
+                        }
+                    }
+                },
+                SendTextResponse: {
+                    fields: {}
+                },
+                SendImageRequest: {
+                    fields: {
+                        fromWxId: {
+                            type: 'string',
+                            id: 1
+                        },
+                        toWxId: {
+                            type: 'string',
+                            id: 2
+                        },
+                        imgData: {
+                            type: 'bytes',
+                            id: 3
+                        }
+                    }
+                },
+                SendImageResponse: {
+                    fields: {}
+                },
+                SendLinkRequest: {
+                    fields: {
+                        fromWxId: {
+                            type: 'string',
+                            id: 1
+                        },
+                        toWxId: {
+                            type: 'string',
+                            id: 2
+                        },
+                        title: {
+                            type: 'string',
+                            id: 3
+                        },
+                        desc: {
+                            type: 'string',
+                            id: 4
+                        },
+                        imgUrl: {
+                            type: 'string',
+                            id: 5
+                        },
+                        url: {
+                            type: 'string',
+                            id: 6
+                        }
+                    }
+                },
+                SendLinkResponse: {
+                    fields: {}
+                },
+                CreateSessionRequest: {
+                    fields: {
+                        wxId: {
+                            type: 'string',
+                            id: 1
+                        },
+                        chatId: {
+                            type: 'string',
+                            id: 2
+                        }
+                    }
+                },
+                CreateSessionResponse: {
+                    fields: {
+                        session: {
+                            type: 'WxSession',
+                            id: 1
                         }
                     }
                 }

@@ -41,3 +41,44 @@ message GetWxMessageListResponse {
     repeated WxMessage list = 1;
     int32 nextId = 2;
 }
+
+message SendTextRequest {
+    int32 sessionId = 1;
+    string content = 2;
+}
+
+message SendTextResponse {
+
+}
+
+message SendImageRequest {
+    string fromWxId = 1;
+    string toWxId = 2;
+    bytes imgData = 3;
+}
+
+message SendImageResponse {
+
+}
+
+message SendLinkRequest {
+    string fromWxId = 1;
+    string toWxId = 2;
+    string title = 3;
+    string desc = 4;
+    string imgUrl = 5;
+    string url = 6;
+}
+
+message SendLinkResponse {
+
+}
+
+message CreateSessionRequest {
+    string wxId = 1;
+    string chatId = 2;
+}
+
+message CreateSessionResponse {
+    WxSession session = 1;
+}

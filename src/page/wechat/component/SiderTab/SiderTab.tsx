@@ -3,40 +3,88 @@ import { Tabs } from 'antd';
 import CustomTabBar from '../CustomTabBar/CustomTabBar';
 import ChatItem from '../ChatItem/ChatItem';
 import UserItem from '../UserItem/UserItem';
+import FriendApplyItem from '../FriendApplyItem/FriendApplyItem';
 import './SiderTab.less';
+import { State, WxSession, WxFriend, WxGroup, WxFriendApply, Target } from '@/store/types/state';
+import { createGetWxSessionListAction, createGetWxFriendApplyListAction, createGetWxFriendListAction, createGetWxGroupListAction, createSetCurrentTargetAction } from '@/store/action';
+import { getParamValue } from '@/util';
+import { connect } from 'react-redux';
+import { TARGET_TYPE_SESSION, TARGET_TYPE_FRIEND, TARGET_TYPE_GROUP } from '@/store/constant';
+
+let wxId = getParamValue('id');
 
 interface Prop {
-    chatList: Array<{id: number, name: string, msg: string, avatar: string, time: string}>,
-    userList: Array<{id: number, name: string, avatar: string}>
+    sessionList: Array<WxSession>,
+    friendList: Array<WxFriend>,
+    groupList: Array<WxGroup>,
+    friendApplyList: Array<WxFriendApply>,
+    getSessionList: () => any,
+    getFriendList: () => any,
+    getGroupList: () => any,
+    getFriendApplyList: () => any,
+    setCurrentTarget: (data: Target) => any
 }
 
 class SiderTab extends React.Component<Prop> {
+    componentDidMount () {
+        let { getSessionList, getFriendList, getGroupList, getFriendApplyList } = this.props;
+        getSessionList();
+        getFriendList();
+        getGroupList();
+        getFriendApplyList();
+    }
+    handlerChatItemClick = (id: any) => {
+        this.props.setCurrentTarget({
+            id,
+            type: TARGET_TYPE_SESSION
+        });
+    }
+    handlerUserItemClick = (id: any, type: string) => {
+        console.log(id, type);
+        this.props.setCurrentTarget({ id, type });
+    }
     render () {
-        const { chatList, userList } = this.props;
-        console.log(chatList);
+        let { sessionList, friendList, groupList, friendApplyList } = this.props;
+        console.log(sessionList);
         return (
             <Tabs className="sider-tab" defaultActiveKey="1">
                 <Tabs.TabPane key="1" tab={<CustomTabBar icon="message" style={{fontSize: '16px'}}></CustomTabBar>}>
-                    {
-                        chatList.map(item => (
-                            <ChatItem avatar={item.avatar} key={item.id} msg={item.msg} name={item.name} time={item.time}></ChatItem>
-                        ))
-                    }
+                    <div className="scroll-box">
+                        {
+                            sessionList.map(item => (
+                                <ChatItem avatar={item.headImg} id={item.sessionId} key={item.sessionId} msg={''} name={item.nickname} onClick={this.handlerChatItemClick} time={''}></ChatItem>
+                            ))
+                        }
+                    </div>
                 </Tabs.TabPane>
                 <Tabs.TabPane key="2" tab={<CustomTabBar icon="user" style={{fontSize: '16px'}}></CustomTabBar>}>
                     <Tabs className="user-tab" defaultActiveKey="1" tabBarStyle={{fontSize: '12px'}}>
                         <Tabs.TabPane key="1" tab={<span style={{fontSize: '12px'}}>好友</span>}>
-                            {
-                                userList.map(user => (
-                                    <UserItem avartar={user.avatar} key={user.id} name={user.name}></UserItem>
-                                ))
-                            }
+                            <div className="scroll-box">
+                                {
+                                    friendList.map(item => (
+                                        <UserItem avatar={item.headImg} id={item.wxId} key={item.wxId} name={item.remarkName || item.nickname} onClick={this.handlerUserItemClick} type={TARGET_TYPE_FRIEND}></UserItem>
+                                    ))
+                                }
+                            </div>
                         </Tabs.TabPane>
                         <Tabs.TabPane key="2" tab={<span style={{fontSize: '12px'}}>群聊</span>}>
-                        群聊
+                            <div className="scroll-box">
+                                {
+                                    groupList.map(item => (
+                                        <UserItem avatar={item.groupHeadImg} id={item.groupId} key={item.groupId} name={item.groupName} onClick={this.handlerUserItemClick} type={TARGET_TYPE_GROUP}></UserItem>
+                                    ))
+                                }
+                            </div>
                         </Tabs.TabPane>
                         <Tabs.TabPane key="3" tab={<span style={{fontSize: '12px'}}>新朋友</span>}>
-                        新朋友
+                            <div className="scroll-box">
+                                {
+                                    friendList.map(item => (
+                                        <FriendApplyItem avatar={item.headImg} id={item.wxId} key={item.wxId} name={item.remarkName || item.nickname} onClick={this.handlerUserItemClick} ticket={''}></FriendApplyItem>
+                                    ))
+                                }
+                            </div>
                         </Tabs.TabPane>
                     </Tabs>
                 </Tabs.TabPane>
@@ -45,4 +93,19 @@ class SiderTab extends React.Component<Prop> {
     }
 }
 
-export default SiderTab;
+function mapStateToProps (state: State) {
+    let { sessionList, friendList, groupList, friendApplyList } = state;
+    return { sessionList, friendList, groupList, friendApplyList };
+}
+
+function mapDispatchToProps (dispatch: any) {
+    return {
+        getSessionList: () => dispatch(createGetWxSessionListAction({wxId, limit: 200})),
+        getFriendList: () => dispatch(createGetWxFriendListAction({wxId, limit: 200})),
+        getGroupList: () => dispatch(createGetWxGroupListAction({wxId, limit: 200})),
+        getFriendApplyList: () => dispatch(createGetWxFriendApplyListAction()),
+        setCurrentTarget: (data: Target) => dispatch(createSetCurrentTargetAction(data))
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SiderTab);
