@@ -112,11 +112,11 @@ export default class AccountCard extends React.Component<Prop, State> {
                 >
                     {
                         list.map((item: any) => (
-                            <Card.Grid key={item.account.id}
+                            <Card.Grid key={item.wxId}
                                 style={{width: '100%', padding: '10px'}}
                             >
                                 <AccountItem
-                                    account={item.account}
+                                    account={item}
                                     onDelete={this.hanlderDeleteBtnClick}
                                     onLogin={this.hanlderLoginBtnClick}
                                     onLogout={this.hanlderLoginBtnClick}

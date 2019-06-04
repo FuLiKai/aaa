@@ -1,4 +1,5 @@
 import React from 'react';
+import { Badge } from 'antd';
 import './ChatItem.less';
 
 interface Props {
@@ -13,7 +14,9 @@ interface Props {
 function ChatItem (props: Props) {
     return (
         <div className="chat-item" onClick={() => props.onClick(props.id)}>
-            <img className="chat-item-avatar" src={props.avatar}/>
+            <Badge>
+                <img className="chat-item-avatar" src={props.avatar}/>
+            </Badge>
             <div className="chat-item-text-box">
                 <span className="chat-item-name">{props.name}</span>
                 <span className="chat-item-msg">{props.msg}</span>

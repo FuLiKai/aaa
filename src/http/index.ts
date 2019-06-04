@@ -67,6 +67,6 @@ export function fetchSendTextMessage (param: Param) : Promise<any> {
     return http.post('/api/v1/send_text', {...BaseRequesParam, ...param});
 }
 
-export function fetchAgreeFriendApply (param: Param) : Promise<any> {
+export function sendAgreeFriendApply (param: Param) : Promise<any> {
     return http.post('/api/v1/agree_apply', {...BaseRequesParam, ...param});
 }

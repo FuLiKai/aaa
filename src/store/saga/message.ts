@@ -1,6 +1,6 @@
-import { put, takeEvery, call, all } from 'redux-saga/effects';
+import { put, takeEvery, call, all, select, takeLeading } from 'redux-saga/effects';
 import { ACTION_GET_MESSAGE_LIST, ACTION_SEND_TEXT_MESSAGE } from '../constant';
-import { createSetWxMessageListAction, createGetWxMessageListAction } from '../action';
+import { createSetWxMessageListAction, createGetWxMessageListAction, createMergeWxMessageListAction } from '../action';
 import { fetchMessageList, fetchSendTextMessage } from '../../http';
 
 export function* getMessageList(action: any) {
@@ -11,7 +11,11 @@ export function* getMessageList(action: any) {
         });
         console.log(data);
         if (Array.isArray(data.list) && data.list.length > 0) {
-            yield put(createSetWxMessageListAction(data.list, action.param.sessionId));
+            if (action.replace) {
+                yield put(createSetWxMessageListAction(data.list, action.param.sessionId));
+            } else {
+                yield put(createMergeWxMessageListAction(data.list, action.param.sessionId, action.param.isNew));
+            }
         }
     } catch (error) {
         console.error(error);
@@ -24,17 +28,23 @@ export function* sendTextMessage (action: any) {
         let param = {
             data: action.param
         };
-        console.log(action.param, JSON.stringify(param));
         let data = yield call(fetchSendTextMessage, param);
-        console.log(data, '11111111111111111111111111111111');
-        yield put(createGetWxMessageListAction({ limit: 200, sessionId: action.param.sessionId }));
+        let start = yield select(state => {
+            let messageList = state.messageMap[action.param.sessionId];
+            if (Array.isArray(messageList) && messageList.length > 0) {
+                return messageList[messageList.length - 1].id;
+            } else {
+                return 0;
+            }
+        });
+        yield put(createGetWxMessageListAction({ sessionId: action.param.sessionId, limit: 50, start, isNew: true }, false));
     } catch (error) {
         console.error(error);
     }
 }
 
 export function* watchGetMessageList () {
-    yield takeEvery(ACTION_GET_MESSAGE_LIST, getMessageList);
+    yield takeLeading(ACTION_GET_MESSAGE_LIST, getMessageList);
 }
 
 export function* watchSendTextMessage () {

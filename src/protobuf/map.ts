@@ -11,9 +11,9 @@ const pbMap: map = {
         request: 'wpb.GetLoginStatusRequest',
         response:'wpb.GetLoginStatusResponse'
     },
-    '/api/v1/account/list': {
-        request: 'wpb.GetWxAccountListRequest',
-        response:'wpb.GetWxAccountListResponse'
+    '/api/v1/client/list': {
+        request: 'wpb.GetWxClientListRequest',
+        response:'wpb.GetWxClientListResponse'
     },
     '/api/v1/session/list': {
         request: 'wpb.GetWxSessionListRequest',

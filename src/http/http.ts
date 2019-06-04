@@ -3,7 +3,7 @@ import map from '../protobuf/map';
 import { Uint8ArryToString, pbEncode, pbDecode, getUrlPath } from '../util';
 
 const http = axios.create({
-    baseURL: 'http://hero.lukou.com:8000',
+    baseURL: 'http://192.168.1.161:8000',
     withCredentials: true,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -25,15 +25,14 @@ http.interceptors.request.use(config => {
 
 http.interceptors.response.use(response => {
     let res = pbDecode('wpb.BaseResponse', new Uint8Array(response.data));
-    console.log(res);
-    // if (res.ret === 200) {
-    let path = getUrlPath(response.config.url as string);
-    let pb = map[path].response;
-    let data = pbDecode(pb, res.data);
-    return data;
-    // } else {
-    //     return Promise.reject(new Error(res.errMsg));
-    // }
+    if (res.ret === 200) {
+        let path = getUrlPath(response.config.url as string);
+        let pb = map[path].response;
+        let data = pbDecode(pb, res.data);
+        return data;
+    } else {
+        return Promise.reject(new Error(res.errMsg));
+    }
 });
 
 
