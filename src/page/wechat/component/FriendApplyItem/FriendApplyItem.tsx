@@ -7,8 +7,9 @@ interface Props {
     name: string,
     avatar: string,
     onClick: (id: any, type: string) => void,
-    ticket: any,
-    content: any
+    ticket: string,
+    content: string,
+    status: number
 }
 
 function FriendApplyItem (props: Props) {
@@ -19,9 +20,20 @@ function FriendApplyItem (props: Props) {
                 <span className="friend-apply-item-name">{props.name}</span>
                 <span className="friend-apply-item-msg">{props.content}</span>
             </div>
-            <div className="friend-apply-item-btn-box">
-                <Button onClick={() => props.onClick(props.id, props.ticket)} size="small" type="primary">接受</Button>
-            </div>
+            {
+                (() => {
+                    switch (props.status) {
+                    case 0:
+                        return  <Button onClick={() => props.onClick(props.id, props.ticket)} size="small" type="primary">接受</Button>;
+                    case 1:
+                        return  <span>已添加</span>;
+                    case 2:
+                        return  <span>已忽略</span>;
+                    default:
+                        break;
+                    }
+                })()
+            }
         </div>
     );
 }

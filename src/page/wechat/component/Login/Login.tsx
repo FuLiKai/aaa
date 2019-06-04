@@ -4,12 +4,15 @@ import { fetchQrCode, fetchLoginStatus } from '@/http';
 import { getParamValue } from '@/util';
 import { Uint8ArryToString } from '@/util';
 import './Login.less';
+import { connect } from 'react-redux';
+import { LoginInfo } from '@/store/types/state';
+import { createSetLoginlAction } from '@/store/action';
 
-// let wxId = getParamValue('id');
-let alias = getParamValue('alias');
+let wxAlias = getParamValue('alias');
 
 interface Prop {
-    onLogin?: () => any
+    onLogin?: () => any,
+    setLoginInfo: (loginInfo: LoginInfo) => any
 }
 
 interface State {
@@ -29,14 +32,14 @@ class Login extends React.Component<Prop, State> {
     }
     componentDidMount () {
         this.getQrCode();
-        fetchLoginStatus({
-            data: {
-                wxId: alias
-            }
-        }).then(res => {
+        fetchLoginStatus().then(res => {
             console.log(res);
             if (res.status === 2) {
                 clearInterval(this.timer);
+                this.props.setLoginInfo({
+                    wxAlias,
+                    wxId: res.wxId
+                });
                 this.setState({
                     isLogin: true
                 });
@@ -47,12 +50,7 @@ class Login extends React.Component<Prop, State> {
     }
     timer: number = 0
     getQrCode = () => {
-        console.log(alias);
-        return fetchQrCode({
-            data: {
-                wxId: alias
-            }
-        }).then(res => {
+        return fetchQrCode().then(res => {
             let src = 'data:image/png;base64,' + btoa(Uint8ArryToString(res.code));
             this.setState({
                 src,
@@ -84,21 +82,21 @@ class Login extends React.Component<Prop, State> {
         let time = 240;
         let i = 0;
         this.timer = setInterval(() => {
-            i += 2;
+            i += 1;
             if (i >= time) {
                 clearInterval(this.timer);
                 this.setState({
                     isValid: false
                 });
             }
-            fetchLoginStatus({
-                data: {
-                    wxId: alias
-                }
-            }).then(res => {
+            fetchLoginStatus().then(res => {
                 console.log(res);
                 if (res.status === 2) {
                     clearInterval(this.timer);
+                    this.props.setLoginInfo({
+                        wxAlias,
+                        wxId: res.wxId
+                    });
                     this.setState({
                         isLogin: true
                     });
@@ -118,4 +116,10 @@ class Login extends React.Component<Prop, State> {
     }
 }
 
-export default Login;
+function mapDispatchToProps (dispatch: any) {
+    return {
+        setLoginInfo: (loginInfo: LoginInfo) => dispatch(createSetLoginlAction(loginInfo))
+    };
+}
+
+export default connect(null, mapDispatchToProps)(Login);

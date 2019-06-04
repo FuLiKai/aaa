@@ -24,7 +24,6 @@ message WxMessage {
 message GetWxSessionListRequest {   // 获取用户会话列表
     int32 start = 1;
     int32 limit = 2;
-    string wxId = 3;
 }
 
 message GetWxSessionListResponse {
@@ -76,8 +75,7 @@ message SendLinkResponse {
 }
 
 message CreateSessionRequest {
-    string wxId = 1;
-    string chatId = 2;
+    string chatId = 1;
 }
 
 message CreateSessionResponse {

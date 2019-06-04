@@ -5,7 +5,7 @@ import ChatItem from '../ChatItem/ChatItem';
 import UserItem from '../UserItem/UserItem';
 import FriendApplyItem from '../FriendApplyItem/FriendApplyItem';
 import './SiderTab.less';
-import { State, WxSession, WxFriend, WxGroup, WxFriendApply, Target } from '@/store/types/state';
+import { State, WxSession, WxFriend, WxGroup, WxFriendApply, Target, WxAccountDetail } from '@/store/types/state';
 import { createGetWxSessionListAction,
     createGetWxFriendApplyListAction,
     createGetWxFriendListAction,
@@ -13,11 +13,11 @@ import { createGetWxSessionListAction,
     createSetCurrentTargetAction,
     createAllowWxFriendApplyAction
 } from '@/store/action';
-import { getParamValue } from '@/util';
+// import { getParamValue } from '@/util';
 import { connect } from 'react-redux';
 import { TARGET_TYPE_SESSION, TARGET_TYPE_FRIEND, TARGET_TYPE_GROUP } from '@/store/constant';
 
-let wxId = getParamValue('id');
+// let wxId = getParamValue('id');
 
 interface Prop {
     sessionList: Array<WxSession>,
@@ -92,7 +92,7 @@ class SiderTab extends React.Component<Prop> {
                             <div className="scroll-box">
                                 {
                                     friendApplyList.map(item => (
-                                        <FriendApplyItem avatar={''} content={item.content} id={item.fromWxId} key={item.fromWxId} name={'zzz'} onClick={this.handlerFriendApplyAcceptClick} ticket={item.ticket}></FriendApplyItem>
+                                        <FriendApplyItem avatar={''} content={item.content} id={item.fromWxId} key={item.fromWxId} name={'zzz'} onClick={this.handlerFriendApplyAcceptClick} status={item.status} ticket={item.ticket}></FriendApplyItem>
                                     ))
                                 }
                             </div>
@@ -111,10 +111,10 @@ function mapStateToProps (state: State) {
 
 function mapDispatchToProps (dispatch: any) {
     return {
-        getSessionList: () => dispatch(createGetWxSessionListAction({wxId, limit: 5000})),
-        getFriendList: () => dispatch(createGetWxFriendListAction({wxId, limit: 5000})),
-        getGroupList: () => dispatch(createGetWxGroupListAction({wxId, limit: 5000})),
-        getFriendApplyList: () => dispatch(createGetWxFriendApplyListAction({ wxId, limit: 5000 })),
+        getSessionList: () => dispatch(createGetWxSessionListAction({limit: 5000})),
+        getFriendList: () => dispatch(createGetWxFriendListAction({limit: 5000})),
+        getGroupList: () => dispatch(createGetWxGroupListAction({limit: 5000})),
+        getFriendApplyList: () => dispatch(createGetWxFriendApplyListAction({limit: 5000 })),
         setCurrentTarget: (data: Target) => dispatch(createSetCurrentTargetAction(data)),
         replyAllowFriendApply: (fromWxId: any, ticket: any) => dispatch(createAllowWxFriendApplyAction({ fromWxId, ticket }))
     };

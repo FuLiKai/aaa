@@ -6,14 +6,16 @@ import { WxMessage } from '@/store/types/state';
 
 interface Prop {
     messageList: Array<any>
-    onScrollToTop: () => any
+    onScrollToTop: () => any,
+    wxId: string
 }
 
 class ChatWindow extends React.Component<Prop> {
     render () {
+        let { messageList, onScrollToTop, wxId } = this.props;
         return (
             <div className="chat-window">
-                <MessageBox messageList={this.props.messageList} onScrollToTop={this.props.onScrollToTop}></MessageBox>
+                <MessageBox messageList={messageList} onScrollToTop={onScrollToTop} wxId={wxId}></MessageBox>
                 <ChatPannel></ChatPannel>
             </div>
         );

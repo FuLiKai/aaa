@@ -9,14 +9,11 @@ import { State, Target } from '@/store/types/state';
 import { TARGET_TYPE_SESSION, TARGET_TYPE_FRIEND, TARGET_TYPE_GROUP } from '@/store/constant';
 import './Main.less';
 import { createSetCurrentTargetAction, createGetWxMessageListAction, createCreateWxSessionAction } from '@/store/action';
-import { getParamValue } from '@/util';
 import createWebSocket from '@/ws';
-
-let wxId = getParamValue('id');
-let shortWxId = getParamValue('alias');
 
 interface Prop {
     target: any,
+    loginInfo: any,
     setCurrentTarget: (data: Target) => any
     getMessageList: (param: any, replace: boolean) => any
     sessionList: any,
@@ -25,11 +22,10 @@ interface Prop {
 
 class Main extends React.Component<Prop> {
     componentDidMount () {
-        let ws = createWebSocket('ws://192.168.1.161:8000/ws/v1');
+        let ws = createWebSocket('ws://hero.lukou.com:8000/ws/v1');
         ws.send({
             cmdId: 1,
-            wxId,
-            shortWxId
+            ...this.props.loginInfo
         });
         ws.onMessage(this.handlerWsMsg);
     }
@@ -90,7 +86,7 @@ class Main extends React.Component<Prop> {
         }
     }
     render () {
-        let target = this.props.target;
+        let { target, loginInfo } = this.props;
         let title: any;
         if (!target) {
             title = '';
@@ -109,7 +105,7 @@ class Main extends React.Component<Prop> {
                         } else {
                             switch (target.type) {
                             case TARGET_TYPE_SESSION:
-                                return <ChatWindow messageList={target.data.messageList} onScrollToTop={this.handlerScrollToTop}></ChatWindow>;
+                                return <ChatWindow messageList={target.data.messageList} onScrollToTop={this.handlerScrollToTop} wxId={loginInfo.wxId}></ChatWindow>;
                             case TARGET_TYPE_FRIEND:
                                 return <UserDetail onClick={this.handlerDetailClick} userInfo={target.data}></UserDetail>;
                             case TARGET_TYPE_GROUP:
@@ -154,7 +150,8 @@ function getTarget (state: State) {
 function mapStateToProps (state: State) {
     return {
         target: getTarget(state),
-        sessionList: state.sessionList
+        sessionList: state.sessionList,
+        loginInfo: state.loginInfo
     };
 }
 
@@ -162,7 +159,7 @@ function mapDispatchToProps (dispatch: any) {
     return {
         setCurrentTarget: (data: Target) => dispatch(createSetCurrentTargetAction(data)),
         getMessageList: (param: any, replace: boolean) => dispatch(createGetWxMessageListAction(param, replace)),
-        createSession: (chatId: any) => dispatch(createCreateWxSessionAction({wxId, chatId}))
+        createSession: (chatId: any) => dispatch(createCreateWxSessionAction({chatId}))
     };
 }
 

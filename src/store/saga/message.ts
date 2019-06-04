@@ -6,9 +6,7 @@ import { fetchMessageList, fetchSendTextMessage } from '../../http';
 export function* getMessageList(action: any) {
     console.log(action);
     try {
-        let data = yield call(fetchMessageList, {
-            data: action.param
-        });
+        let data = yield call(fetchMessageList, action.param);
         console.log(data);
         if (Array.isArray(data.list) && data.list.length > 0) {
             if (action.replace) {
@@ -25,9 +23,7 @@ export function* getMessageList(action: any) {
 export function* sendTextMessage (action: any) {
     console.log(action);
     try {
-        let param = {
-            data: action.param
-        };
+        let param = action.param;
         let data = yield call(fetchSendTextMessage, param);
         let start = yield select(state => {
             let messageList = state.messageMap[action.param.sessionId];

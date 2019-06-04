@@ -4,7 +4,6 @@ package wpb;
 
 
 message GetLoginQrcodeRequest {
-    string wxId = 1;
 }
 
 message GetLoginQrcodeResponse {
@@ -12,15 +11,14 @@ message GetLoginQrcodeResponse {
 }
 
 message GetLoginStatusRequest {
-    string wxId = 1;
 }
 
 message GetLoginStatusResponse {
     int32 status = 1;
+    string wxId = 2;
 }
 
 message CheckLoginQrcodeRequest {
-    string wxId = 1;
 }
 
 message CheckLoginQrcodeResponse {

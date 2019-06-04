@@ -5,3 +5,4 @@ export { createGetWxFriendApplyListAction, createSetWxFriendApplyListAction, cre
 export { createGetWxGroupListAction, createSetWxGroupListAction } from './group';
 export { createGetWxMessageListAction, createSetWxMessageListAction, createSendTextMessageAction, createMergeWxMessageListAction } from './message';
 export { createGetWxSessionListAction, createSetWxSessionListAction, createCreateWxSessionAction } from './session';
+export { createSetLoginlAction } from './loginInfo';

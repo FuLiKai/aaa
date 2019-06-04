@@ -6,9 +6,7 @@ import { fetchFriendApplyList, sendAgreeFriendApply } from '../../http';
 export function* getFriendApplyList(action: any) {
     console.log(action);
     try {
-        let data = yield call(fetchFriendApplyList, {
-            data: action.param
-        });
+        let data = yield call(fetchFriendApplyList, action.param);
         console.log(data);
         yield put(createSetWxFriendApplyListAction(data.list));
     } catch (error) {
@@ -19,9 +17,7 @@ export function* getFriendApplyList(action: any) {
 export function* replyFriendApply(action: any) {
     console.log(action);
     try {
-        let data = yield call(sendAgreeFriendApply, {
-            data: action.param
-        });
+        let data = yield call(sendAgreeFriendApply, action.param);
         yield put(createGetWxFriendApplyListAction({ limit: 5000 }));
         console.log(data);
     } catch (error) {

@@ -1,12 +1,10 @@
 import React from 'react';
 import './MessageBox.less';
-import { getParamValue } from '@/util';
-
-let wxId = getParamValue('id');
 
 interface Prop {
     messageList: Array<any>
-    onScrollToTop: () => any
+    onScrollToTop: () => any,
+    wxId: string
 }
 
 class MessageBox extends React.Component<Prop> {
@@ -31,7 +29,7 @@ class MessageBox extends React.Component<Prop> {
         scroller.scrollTop = scroller.scrollHeight - scroller.offsetHeight;
     }
     render () {
-        let { messageList } = this.props;
+        let { messageList, wxId } = this.props;
         let list;
         if (Array.isArray(messageList)) {
             list = messageList.map(msg => {

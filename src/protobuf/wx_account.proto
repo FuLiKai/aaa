@@ -72,7 +72,6 @@ message GetWxAccountListResponse {
 message GetWxFriendListRequest {
     int32 start = 1;
     int32 limit = 2;
-    string wxId = 3;
 }
 
 message GetWxFriendListResponse {
@@ -83,7 +82,6 @@ message GetWxFriendListResponse {
 message GetWxGroupListRequest {
     int32 start = 1;
     int32 limit = 2;
-    string wxId = 3;
 }
 
 message GetWxGroupListResponse {
@@ -94,7 +92,6 @@ message GetWxGroupListResponse {
 message GetWxFriendApplyListRequest {
     int32 start = 1;
     int32 limit = 2;
-    string wxId = 3;
 }
 
 message GetWxFriendApplyListResponse {
@@ -118,11 +115,9 @@ message AgreeFriendApplyRequest {
 }
 
 message AgreeFriendApplyResponse {
-
 }
 
 message GetAccountDetailRequest {
-    string wxId = 1;
 }
 
 message GetAccountDetailResponse {

@@ -6,23 +6,24 @@ interface Prop {
     account: {
         nickname: string,
         wxAlias: string,
-        login: boolean,
-        avatar?: string
+        // 1在线 0离线
+        status: number,
     }
-    onLogin: () => any,
-    onLogout: () => any,
+    onLogin: (wxAlias: string) => any,
+    onLogout: (wxAlias: string) => any,
     onDelete: () => any
 }
 
 export default class AccountItem extends React.Component<Prop> {
     handlerLoginBtnClick = () => {
-        this.props.account.login ? this.props.onLogin() : this.props.onLogout();
+        let { account, onLogin, onLogout } = this.props;
+        account.status ? onLogout(account.wxAlias) : onLogin(account.wxAlias);
     }
     handlerDeleteBtnClick = () => {
         this.props.onDelete();
     }
     render () {
-        let { nickname, wxAlias, login } = this.props.account;
+        let { nickname, wxAlias, status } = this.props.account;
         return (
             <div className="account-item">
                 <div>
@@ -30,7 +31,7 @@ export default class AccountItem extends React.Component<Prop> {
                     <span>{wxAlias}</span>
                 </div>
                 <div>
-                    <Button onClick={this.handlerLoginBtnClick} type="primary">{login ? '下线' : '上线'}</Button>
+                    <Button onClick={this.handlerLoginBtnClick} type="primary">{status ? '下线' : '上线'}</Button>
                     <Button onClick={this.handlerDeleteBtnClick} type="danger">删除</Button>
                 </div>
             </div>

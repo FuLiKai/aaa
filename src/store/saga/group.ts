@@ -7,9 +7,7 @@ import groupList from '@/mock/groupList';
 export function* getGroupList(action: any) {
     console.log(action);
     try {
-        let data = yield call(fetchGroupList, {
-            data: action.param
-        });
+        let data = yield call(fetchGroupList, action.param);
         console.log(data);
         if (Array.isArray(data.list) && data.list.length > 0) {
             yield put(createSetWxGroupListAction(data.list));

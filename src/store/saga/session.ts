@@ -8,9 +8,7 @@ import { TARGET_TYPE_SESSION } from '@/store/constant';
 export function* getSessionList (action: any) {
     console.log(action);
     try {
-        let data = yield call(fetchSessionList, {
-            data: action.param
-        });
+        let data = yield call(fetchSessionList, action.param);
         console.log(data);
         if (Array.isArray(data.list) && data.list.length > 0) {
             yield put(createSetWxSessionListAction(data.list));
@@ -23,9 +21,7 @@ export function* getSessionList (action: any) {
 export function* createSession (action: any) {
     console.log(action, 'bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
     try {
-        let data = yield call(fetchCreateSession, {
-            data: action.param
-        });
+        let data = yield call(fetchCreateSession, action.param);
         console.log(data);
         yield put(createGetWxSessionListAction({wxId: action.param.wxId, limit: 200}));
         yield put(createSetCurrentTargetAction({id: data.session.sessionId, type: TARGET_TYPE_SESSION }));

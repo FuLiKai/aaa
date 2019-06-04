@@ -77,13 +77,18 @@ export interface messageMap {
     [propName: number]: Array<WxMessage>
 }
 
+export interface LoginInfo {
+    wxId: string,
+    wxAlias: string
+}
+
 export interface State {
-    accountDetail: WxAccount,
+    accountDetail: WxAccountDetail,
     currentTarget: Target,
     friendApplyList: Array<WxFriendApply>,
     friendList: Array<WxFriend>,
     groupList: Array<WxGroup>,
-    messageMap: messageMap
-
+    messageMap: messageMap,
+    loginInfo: LoginInfo
     sessionList: Array<WxSession>
 }

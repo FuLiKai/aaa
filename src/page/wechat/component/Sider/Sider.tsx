@@ -2,8 +2,6 @@ import React from 'react';
 import { Layout, Input } from 'antd';
 import SiderHeader from '../SiderHeader/SiderHeader';
 import SiderTab from '../SiderTab/SiderTab';
-import chatList from '@/mock/chatList';
-import userList from '@/mock/userList';
 import './Sider.less';
 import { State, WxAccountDetail } from '@/store/types/state';
 import { createGetAccountDetailAction } from '@/store/action';
@@ -40,7 +38,7 @@ function mapStateToProps (state: State) {
 
 function mapDispatchToProps (dispatch: any) {
     return {
-        getAccountDetail: () => dispatch(createGetAccountDetailAction({wxId}))
+        getAccountDetail: () => dispatch(createGetAccountDetailAction({}))
     };
 }
 

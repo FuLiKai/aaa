@@ -6,9 +6,7 @@ import { fetchAccountDetail } from '../../http';
 export function* getAccountDetail(action: any) {
     console.log(action);
     try {
-        let data = yield call(fetchAccountDetail, {
-            data: action.param
-        });
+        let data = yield call(fetchAccountDetail, action.param);
         console.log(data);
         if (data.detail) {
             yield put(createSetAccountDetailAction(data.detail));

@@ -4,10 +4,10 @@ package wpb;
 
 message BaseRequest {
     int32 cmdId = 1;
-    string wxId = 2;
-    int64 seq = 3;
-    bytes data = 4;
-    string shortWxId = 5;
+    string wxAlias = 2;
+    string wxId = 3;
+    int64 seq = 4;
+    bytes data = 5;
 }
 
 message BaseResponse {

@@ -11,20 +11,20 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                             type: 'int32',
                             id: 1
                         },
-                        wxId: {
+                        wxAlias: {
                             type: 'string',
                             id: 2
                         },
+                        wxId: {
+                            type: 'string',
+                            id: 3
+                        },
                         seq: {
                             type: 'int64',
-                            id: 3
+                            id: 4
                         },
                         data: {
                             type: 'bytes',
-                            id: 4
-                        },
-                        shortWxId: {
-                            type: 'string',
                             id: 5
                         }
                     }
@@ -312,10 +312,6 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         limit: {
                             type: 'int32',
                             id: 2
-                        },
-                        wxId: {
-                            type: 'string',
-                            id: 3
                         }
                     }
                 },
@@ -341,10 +337,6 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         limit: {
                             type: 'int32',
                             id: 2
-                        },
-                        wxId: {
-                            type: 'string',
-                            id: 3
                         }
                     }
                 },
@@ -370,10 +362,6 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         limit: {
                             type: 'int32',
                             id: 2
-                        },
-                        wxId: {
-                            type: 'string',
-                            id: 3
                         }
                     }
                 },
@@ -431,12 +419,7 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                     fields: {}
                 },
                 GetAccountDetailRequest: {
-                    fields: {
-                        wxId: {
-                            type: 'string',
-                            id: 1
-                        }
-                    }
+                    fields: {}
                 },
                 GetAccountDetailResponse: {
                     fields: {
@@ -447,12 +430,7 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                     }
                 },
                 GetLoginQrcodeRequest: {
-                    fields: {
-                        wxId: {
-                            type: 'string',
-                            id: 1
-                        }
-                    }
+                    fields: {}
                 },
                 GetLoginQrcodeResponse: {
                     fields: {
@@ -463,28 +441,22 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                     }
                 },
                 GetLoginStatusRequest: {
-                    fields: {
-                        wxId: {
-                            type: 'string',
-                            id: 1
-                        }
-                    }
+                    fields: {}
                 },
                 GetLoginStatusResponse: {
                     fields: {
                         status: {
                             type: 'int32',
                             id: 1
+                        },
+                        wxId: {
+                            type: 'string',
+                            id: 2
                         }
                     }
                 },
                 CheckLoginQrcodeRequest: {
-                    fields: {
-                        wxId: {
-                            type: 'string',
-                            id: 1
-                        }
-                    }
+                    fields: {}
                 },
                 CheckLoginQrcodeResponse: {
                     fields: {
@@ -575,10 +547,6 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         limit: {
                             type: 'int32',
                             id: 2
-                        },
-                        wxId: {
-                            type: 'string',
-                            id: 3
                         }
                     }
                 },
@@ -691,13 +659,9 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                 },
                 CreateSessionRequest: {
                     fields: {
-                        wxId: {
-                            type: 'string',
-                            id: 1
-                        },
                         chatId: {
                             type: 'string',
-                            id: 2
+                            id: 1
                         }
                     }
                 },

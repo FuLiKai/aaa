@@ -16,10 +16,8 @@ class App extends React.Component<Object, { clients: any }> {
     }
     componentDidMount () {
         fetchClientList({
-            data: {
-                start: 0,
-                limit: 1000
-            }
+            start: 0,
+            limit: 1000
         }).then(res => {
             console.log(res);
             this.setState({
