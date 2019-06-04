@@ -5,7 +5,7 @@ import ChatWindow from '../ChatWindow/ChatWindow';
 import UserDetail from '../UserDetail/UserDetail';
 import GroupDetail from '../GroupDetail/GroupDetail';
 import { connect } from 'react-redux';
-import { State, Target } from '@/store/types/state';
+import { State, Target, WxMessage } from '@/store/types/state';
 import { TARGET_TYPE_SESSION, TARGET_TYPE_FRIEND, TARGET_TYPE_GROUP } from '@/store/constant';
 import './Main.less';
 import { createSetCurrentTargetAction, createGetWxMessageListAction, createCreateWxSessionAction } from '@/store/action';
@@ -43,22 +43,11 @@ class Main extends React.Component<Prop> {
     getSessionMessageList = (replace: boolean = true, isNew: boolean = true) => {
         let { target, getMessageList } = this.props;
         if (target && target.type === TARGET_TYPE_SESSION) {
-            let messageList = target.data.messageList;
-            let start = 0;
-            if (Array.isArray(target.data.messageList) && target.data.messageList.length > 0) {
-                if (isNew) {
-                    start = messageList[messageList.length - 1].id;
-                } else {
-                    start = messageList[0].id;
-                }
-            }
             let param = {
                 limit: 50,
                 isNew,
-                start,
                 sessionId: target.data.sessionId
             };
-            console.log(target.data, param);
             getMessageList(param, replace);
         }
     }
@@ -78,11 +67,8 @@ class Main extends React.Component<Prop> {
     }
     handlerWsMsg = (data: any): any => {
         let { target } = this.props;
-        console.log(data);
-        if (target) {
-            if (target.type === TARGET_TYPE_SESSION && target.id == data.sessionId) {
-                this.getSessionMessageList(false, true);
-            }
+        if (target && target.type === TARGET_TYPE_SESSION && target.id == data.sessionId) {
+            this.getSessionMessageList(false, true);
         }
     }
     render () {
@@ -123,7 +109,7 @@ class Main extends React.Component<Prop> {
 }
 
 function getTarget (state: State) {
-    if (!state.currentTarget) return null;
+    if (!state.currentTarget || !state.currentTarget.id) return null;
     let data;
     let { type, id } = state.currentTarget;
     switch (type) {

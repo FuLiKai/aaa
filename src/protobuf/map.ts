@@ -49,7 +49,7 @@ const pbMap: map = {
     },
     '/api/v1/agree_apply': {
         request: 'wpb.AgreeFriendApplyRequest',
-        response:'wpb.AgreeFriendResponse'
+        response:'wpb.AgreeFriendApplyResponse'
     }
 };
 

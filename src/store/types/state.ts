@@ -35,14 +35,14 @@ export interface WxSession {
 export interface WxFriend {
     wxId: string,
     wxAlias: string,
-    nickname: string, //昵称
-    remarkName: string, //备注名称
-    headImg: string, // 头像
-    sex: number, //性别
-    country: string, //国籍
-    province: string, //省份
-    city: string, //城市
-    labelId: string //标签id
+    nickname: string,
+    remarkName: string,
+    headImg: string,
+    sex: number,
+    country: string,
+    province: string,
+    city: string,
+    labelId: string
 }
 
 export interface WxGroup {
@@ -57,20 +57,24 @@ export interface WxFriendApply {
     content: string,
     ticket: string,
     status: number,
+    nickname: string,
+    headImg: string,
+    time: number
 }
 
 export interface WxMessage {
     sessionId: number,
     fromWxId: string,
-    toWxId: string,
+    toWxId?: string,
     msgType: number,
-    rawMsg: string
+    rawMsg: string,
+    id?: number;
+    time?: number;
 }
 
 export interface Target {
     type: string,
     id: string | number
-    data?: any
 }
 
 export interface messageMap {

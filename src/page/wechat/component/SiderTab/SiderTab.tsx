@@ -13,13 +13,11 @@ import { createGetWxSessionListAction,
     createSetCurrentTargetAction,
     createAllowWxFriendApplyAction
 } from '@/store/action';
-// import { getParamValue } from '@/util';
 import { connect } from 'react-redux';
 import { TARGET_TYPE_SESSION, TARGET_TYPE_FRIEND, TARGET_TYPE_GROUP } from '@/store/constant';
 
-// let wxId = getParamValue('id');
-
 interface Prop {
+    currentTarget: Target
     sessionList: Array<WxSession>,
     friendList: Array<WxFriend>,
     groupList: Array<WxGroup>,
@@ -32,13 +30,52 @@ interface Prop {
     replyAllowFriendApply: (toWxId: any, ticket: any) => any
 }
 
-class SiderTab extends React.Component<Prop> {
+interface ownState {
+    tabIndex1: string,
+    tabIndex2: string
+}
+
+class SiderTab extends React.Component<Prop, ownState> {
+    constructor (props: Prop) {
+        super(props);
+        this.state = {
+            tabIndex1: '1',
+            tabIndex2: '21'
+        };
+    }
     componentDidMount () {
         let { getSessionList, getFriendList, getGroupList, getFriendApplyList } = this.props;
         getSessionList();
         getFriendList();
         getGroupList();
         getFriendApplyList();
+    }
+    UNSAFE_componentWillReceiveProps (nextProps: Prop) {
+        if (this.props.currentTarget) {
+            if (this.props.currentTarget.type !== nextProps.currentTarget.type) {
+                switch (nextProps.currentTarget.type) {
+                case TARGET_TYPE_SESSION:
+                    this.setState({
+                        tabIndex1: '1'
+                    });
+                    break;
+                case TARGET_TYPE_FRIEND:
+                    this.setState({
+                        tabIndex1: '2',
+                        tabIndex2: '21'
+                    });
+                    break;
+                case TARGET_TYPE_GROUP:
+                    this.setState({
+                        tabIndex1: '2',
+                        tabIndex2: '22'
+                    });
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
     }
     handlerChatItemClick = (id: any) => {
         this.props.setCurrentTarget({
@@ -47,30 +84,38 @@ class SiderTab extends React.Component<Prop> {
         });
     }
     handlerUserItemClick = (id: any, type: string) => {
-        console.log(id, type);
         this.props.setCurrentTarget({ id, type });
     }
     handlerFriendApplyAcceptClick = (id: any, ticket: any) => {
-        console.log(id, ticket);
         this.props.replyAllowFriendApply(id, ticket);
+    }
+    handlerTab1Change = (key: any) => {
+        this.setState({
+            tabIndex1: key
+        });
+    }
+    handlerTab2Change = (key: any) => {
+        this.setState({
+            tabIndex2: key
+        });
     }
     render () {
         let { sessionList, friendList, groupList, friendApplyList } = this.props;
-        console.log(sessionList);
+        let { tabIndex1, tabIndex2 } = this.state;
         return (
-            <Tabs className="sider-tab" defaultActiveKey="1">
+            <Tabs activeKey={tabIndex1} className="sider-tab" onChange={this.handlerTab1Change}>
                 <Tabs.TabPane key="1" tab={<CustomTabBar icon="message" style={{fontSize: '16px'}}></CustomTabBar>}>
                     <div className="scroll-box">
                         {
                             sessionList.map(item => (
-                                <ChatItem avatar={item.headImg} id={item.sessionId} key={item.sessionId} msg={''} name={item.nickname} onClick={this.handlerChatItemClick} time={''}></ChatItem>
+                                <ChatItem avatar={item.headImg} id={item.sessionId} key={item.sessionId} msg={''} name={item.nickname} onClick={this.handlerChatItemClick} status={item.status} time={''}></ChatItem>
                             ))
                         }
                     </div>
                 </Tabs.TabPane>
                 <Tabs.TabPane key="2" tab={<CustomTabBar icon="user" style={{fontSize: '16px'}}></CustomTabBar>}>
-                    <Tabs className="user-tab" defaultActiveKey="1" tabBarStyle={{fontSize: '12px'}}>
-                        <Tabs.TabPane key="1" tab={<span style={{fontSize: '12px'}}>好友</span>}>
+                    <Tabs activeKey={tabIndex2} className="user-tab" onChange={this.handlerTab2Change} tabBarStyle={{fontSize: '12px'}}>
+                        <Tabs.TabPane key="21" tab={<span style={{fontSize: '12px'}}>好友</span>}>
                             <div className="scroll-box">
                                 {
                                     friendList.map(item => (
@@ -79,7 +124,7 @@ class SiderTab extends React.Component<Prop> {
                                 }
                             </div>
                         </Tabs.TabPane>
-                        <Tabs.TabPane key="2" tab={<span style={{fontSize: '12px'}}>群聊</span>}>
+                        <Tabs.TabPane key="22" tab={<span style={{fontSize: '12px'}}>群聊</span>}>
                             <div className="scroll-box">
                                 {
                                     groupList.map(item => (
@@ -88,11 +133,11 @@ class SiderTab extends React.Component<Prop> {
                                 }
                             </div>
                         </Tabs.TabPane>
-                        <Tabs.TabPane key="3" tab={<span style={{fontSize: '12px'}}>新朋友</span>}>
+                        <Tabs.TabPane key="23" tab={<span style={{fontSize: '12px'}}>新朋友</span>}>
                             <div className="scroll-box">
                                 {
                                     friendApplyList.map(item => (
-                                        <FriendApplyItem avatar={''} content={item.content} id={item.fromWxId} key={item.fromWxId} name={'zzz'} onClick={this.handlerFriendApplyAcceptClick} status={item.status} ticket={item.ticket}></FriendApplyItem>
+                                        <FriendApplyItem avatar={item.headImg} content={item.content} id={item.fromWxId} key={item.fromWxId} name={item.nickname} onClick={this.handlerFriendApplyAcceptClick} status={item.status} ticket={item.ticket}></FriendApplyItem>
                                     ))
                                 }
                             </div>
@@ -105,8 +150,8 @@ class SiderTab extends React.Component<Prop> {
 }
 
 function mapStateToProps (state: State) {
-    let { sessionList, friendList, groupList, friendApplyList } = state;
-    return { sessionList, friendList, groupList, friendApplyList };
+    let { currentTarget, sessionList, friendList, groupList, friendApplyList } = state;
+    return { currentTarget, sessionList, friendList, groupList, friendApplyList };
 }
 
 function mapDispatchToProps (dispatch: any) {

@@ -250,6 +250,18 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         status: {
                             type: 'int32',
                             id: 4
+                        },
+                        nickname: {
+                            type: 'string',
+                            id: 5
+                        },
+                        headImg: {
+                            type: 'string',
+                            id: 6
+                        },
+                        time: {
+                            type: 'int64',
+                            id: 7
                         }
                     }
                 },
@@ -535,6 +547,10 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         id: {
                             type: 'int32',
                             id: 6
+                        },
+                        time: {
+                            type: 'int64',
+                            id: 7
                         }
                     }
                 },

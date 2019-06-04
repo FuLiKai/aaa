@@ -47,6 +47,9 @@ message WxFriendApply {
     string content = 2;
     string ticket = 3;
     int32 status = 4;
+    string nickname = 5;
+    string headImg = 6;
+    int64 time = 7;
 }
 
 message WxAccountDetail {

@@ -2,11 +2,36 @@ import { put, takeEvery, call, all, select, takeLeading } from 'redux-saga/effec
 import { ACTION_GET_MESSAGE_LIST, ACTION_SEND_TEXT_MESSAGE } from '../constant';
 import { createSetWxMessageListAction, createGetWxMessageListAction, createMergeWxMessageListAction } from '../action';
 import { fetchMessageList, fetchSendTextMessage } from '../../http';
+import { random } from '@/util';
+import { State } from '../types/state';
+
+function getLastSuccessMessageId (list: Array<any>) {
+    let len = list.length;
+    if (len === 0) return 0;
+    for (let i = len - 1; i >= 0; i--) {
+        let id = list[i].id;
+        if (id && id > 0) {
+            return id;
+        }
+    }
+    return 0;
+}
 
 export function* getMessageList(action: any) {
     console.log(action);
     try {
-        let data = yield call(fetchMessageList, action.param);
+        let start = 0;
+        let messageList = yield select(state => {
+            return state.messageMap[action.param.sessionId];
+        });
+        if (Array.isArray(messageList) && messageList.length > 0) {
+            if (action.param.isNew) {
+                start = getLastSuccessMessageId(messageList);
+            } else {
+                start = messageList[0].id;
+            }
+        }
+        let data = yield call(fetchMessageList, {...action.param, start});
         console.log(data);
         if (Array.isArray(data.list) && data.list.length > 0) {
             if (action.replace) {
@@ -25,16 +50,22 @@ export function* sendTextMessage (action: any) {
     try {
         let param = action.param;
         let data = yield call(fetchSendTextMessage, param);
-        let start = yield select(state => {
-            let messageList = state.messageMap[action.param.sessionId];
-            if (Array.isArray(messageList) && messageList.length > 0) {
-                return messageList[messageList.length - 1].id;
-            } else {
-                return 0;
-            }
-        });
-        yield put(createGetWxMessageListAction({ sessionId: action.param.sessionId, limit: 50, start, isNew: true }, false));
+        yield put(createGetWxMessageListAction({ sessionId: action.param.sessionId, limit: 50, isNew: true }, false));
     } catch (error) {
+        let userInfo = yield select((state: State) => {
+            return {
+                fromWxId: state.loginInfo.wxId,
+                headImg: state.accountDetail.account.headImg
+            };
+        });
+        let msg = {
+            id: random(-10, -99999999),
+            sessionId: action.param.sessionId,
+            msgType: 1,
+            rawMsg: JSON.stringify({content: action.param.content }),
+            ...userInfo
+        };
+        yield put(createMergeWxMessageListAction([msg], action.param.sessionId, true));
         console.error(error);
     }
 }

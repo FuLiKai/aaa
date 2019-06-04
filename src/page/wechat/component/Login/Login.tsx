@@ -33,7 +33,6 @@ class Login extends React.Component<Prop, State> {
     componentDidMount () {
         this.getQrCode();
         fetchLoginStatus().then(res => {
-            console.log(res);
             if (res.status === 2) {
                 clearInterval(this.timer);
                 this.props.setLoginInfo({
@@ -90,7 +89,6 @@ class Login extends React.Component<Prop, State> {
                 });
             }
             fetchLoginStatus().then(res => {
-                console.log(res);
                 if (res.status === 2) {
                     clearInterval(this.timer);
                     this.props.setLoginInfo({

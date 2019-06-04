@@ -19,6 +19,7 @@ export default (state: Message = {}, action: BaseAction) => {
         let sessionId = action.sessionId;
         if (!state[sessionId]) {
             return {
+                ...state,
                 [sessionId]: action.data
             };
         } else if (action.isNew) {

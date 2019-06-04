@@ -19,6 +19,7 @@ message WxMessage {
     int32 msgType = 4;
     string rawMsg = 5;
     int32 id = 6;
+    int64 time = 7;
 }
 
 message GetWxSessionListRequest {   // 获取用户会话列表

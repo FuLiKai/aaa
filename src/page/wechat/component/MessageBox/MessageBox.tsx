@@ -1,5 +1,6 @@
 import React from 'react';
 import './MessageBox.less';
+import { Icon } from 'antd';
 
 interface Prop {
     messageList: Array<any>
@@ -42,7 +43,6 @@ class MessageBox extends React.Component<Prop> {
                     return msg;
                 }
             });
-            console.log(list);
         }
         return (
             <div className="message-box message-scroll-wrapper" onScroll={this.handlerScroll} ref={this.myRef}>
@@ -51,20 +51,29 @@ class MessageBox extends React.Component<Prop> {
                         list && list.map((msg:any) => (
                             <div className={`${msg.fromWxId === wxId? 'self': 'other'} message-item`} key={msg.id} >
                                 <img className="message-avatar" src={msg.headImg}/>
-                                <div className="message-text-wrapper">
-                                    {
-                                        (() => {
-                                            switch (msg.msgType) {
-                                            case 1:
-                                                return <pre className="message-text">{msg.content}</pre>;
-                                            case 2:
-                                                return <img className="message-img" src={msg.picUrl}/>;
-                                            default:
-                                                return <span>暂不支持此类消息</span>;
-                                            }
-                                        })()
-                                    }
-                                </div>
+                                {
+                                    (() => {
+                                        switch (msg.msgType) {
+                                        case 1:
+                                            return (
+                                                <div className="message-text-wrapper">
+                                                    <pre className="message-text">{msg.content}</pre>
+                                                </div>
+                                            );
+                                        case 2:
+                                            return <img className="message-img" src={msg.picUrl}/>;
+                                        default:
+                                            return (
+                                                <div className="message-text-wrapper">
+                                                    <span>暂不支持此类消息</span>
+                                                </div>
+                                            );
+                                        }
+                                    })()
+                                }
+                                {
+                                    msg.id < 0 && <Icon style={{color: 'red', fontSize: '16px', marginTop: '12px'}} theme="filled" type="info-circle"/>
+                                }
                             </div>
                         ))
                     }
