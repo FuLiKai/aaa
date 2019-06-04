@@ -1,33 +1,55 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './App.less';
-// import { Button } from 'antd';
 import { Row, Col } from 'antd';
 import AccountCard from './component/AccountCard/AccountCard';
 import accountList from '@/mock/accountList.json';
+import { fetchClientList } from '@/http';
 
-const App: React.FC = () => {
-    return (
-        <div className="App">
-            <Row gutter={20}
-                justify="space-between"
-            >
-                {
-                    accountList.list.map(item => (
-                        <Col
-                            key={item.ip}
-                            span={8}
-                        >
-                            <AccountCard
-                                ip={item.ip}
-                                list={item.accountList as any}
-                            ></AccountCard>
-                        </Col>
-                    ))
-                }
-            </Row>
-        </div>
-    );
-};
+class App extends React.Component<Object, { clients: any }> {
+    constructor (props: any) {
+        super(props);
+        this.state = {
+            clients: {
+                list: []
+            }
+        };
+    }
+    componentDidMount () {
+        fetchClientList({
+            data: {
+                start: 0,
+                limit: 1000
+            }
+        }).then(res => {
+            console.log(res);
+            this.setState({
+                clients: res
+            });
+        });
+    }
+    render () {
+        return (
+            <div className="App">
+                <Row gutter={20}
+                    justify="space-between"
+                >
+                    {
+                        this.state.clients.list.map((item: any) => (
+                            <Col
+                                key={item.ipAddr}
+                                span={8}
+                            >
+                                <AccountCard
+                                    ip={item.ipAddr}
+                                    list={item.clients as any}
+                                ></AccountCard>
+                            </Col>
+                        ))
+                    }
+                </Row>
+            </div>
+        );
+    }
+}
 
 export default App;

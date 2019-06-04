@@ -99,7 +99,7 @@ message GetWxFriendApplyListRequest {
 
 message GetWxFriendApplyListResponse {
     repeated WxFriendApply list = 1;
-    int32 NextId = 2;
+    int32 nextId = 2;
 }
 
 message GetWxClientListRequest {
@@ -109,13 +109,12 @@ message GetWxClientListRequest {
 
 message GetWxClientListResponse {
     repeated WxClients list = 1;
-    int32 NextId = 2;
+    int32 nextId = 2;
 }
 
 message AgreeFriendApplyRequest {
     string fromWxId = 1;
-    string toWxId = 2;
-    string ticket = 3;
+    string ticket = 2;
 }
 
 message AgreeFriendApplyResponse {

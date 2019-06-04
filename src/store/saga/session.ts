@@ -27,7 +27,7 @@ export function* createSession (action: any) {
             data: action.param
         });
         console.log(data);
-        yield put(createGetWxSessionListAction({wxId: action.wxId, limit: 200}));
+        yield put(createGetWxSessionListAction({wxId: action.param.wxId, limit: 200}));
         yield put(createSetCurrentTargetAction({id: data.session.sessionId, type: TARGET_TYPE_SESSION }));
     } catch (error) {
         console.error(error);

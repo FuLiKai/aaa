@@ -10,40 +10,62 @@ import { TARGET_TYPE_SESSION, TARGET_TYPE_FRIEND, TARGET_TYPE_GROUP } from '@/st
 import './Main.less';
 import { createSetCurrentTargetAction, createGetWxMessageListAction, createCreateWxSessionAction } from '@/store/action';
 import { getParamValue } from '@/util';
+import ws from '@/ws';
 
 let wxId = getParamValue('id');
+let shortWxId = getParamValue('alias');
 
 interface Prop {
     target: any,
     setCurrentTarget: (data: Target) => any
-    getMessageList: (sessionId: number) => any
+    getMessageList: (param: any, replace: boolean) => any
     sessionList: any,
     createSession: (chatId: any) => any
 }
 
 class Main extends React.Component<Prop> {
+    componentDidMount () {
+        ws.send({
+            cmdId: 1,
+            wxId,
+            shortWxId
+        });
+        ws.onMessage(this.handlerWsMsg);
+    }
     componentDidUpdate (preProps: Prop) {
         let target = this.props.target;
         let preTarget = preProps.target;
         if (!preTarget) {
-            this.getSessionMessageList();
+            this.getSessionMessageList(true, false);
         } else {
             if (preTarget.id !== target.id) {
-                this.getSessionMessageList();
+                this.getSessionMessageList(false, true);
             }
         }
     }
-    getSessionMessageList = () => {
+    getSessionMessageList = (replace: boolean = true, isNew: boolean = true) => {
         let { target, getMessageList } = this.props;
         if (target && target.type === TARGET_TYPE_SESSION) {
-            getMessageList(target.id);
+            let messageList = target.data.messageList;
+            let start = 0;
+            if (Array.isArray(target.data.messageList) && target.data.messageList.length > 0) {
+                if (isNew) {
+                    start = messageList[messageList.length - 1].id;
+                } else {
+                    start = messageList[0].id;
+                }
+            }
+            let param = {
+                limit: 50,
+                isNew,
+                start,
+                sessionId: target.data.sessionId
+            };
+            console.log(target.data, param);
+            getMessageList(param, replace);
         }
     }
     handlerDetailClick = (id: string) => {
-        // this.props.setCurrentTarget({
-        //     id,
-        //     type: TARGET_TYPE_SESSION
-        // });
         let session = this.props.sessionList.find((session: any) => session.chatId == id);
         if (session) {
             this.props.setCurrentTarget({
@@ -51,8 +73,19 @@ class Main extends React.Component<Prop> {
                 type: TARGET_TYPE_SESSION
             });
         } else {
-            console.log('aaaaaaaaaaaaaaaaaaaaaa', id);
             this.props.createSession(id);
+        }
+    }
+    handlerScrollToTop = () => {
+        this.getSessionMessageList(false, false);
+    }
+    handlerWsMsg = (data: any): any => {
+        let { target } = this.props;
+        console.log(data);
+        if (target) {
+            if (target.type === TARGET_TYPE_SESSION && target.id == data.sessionId) {
+                this.getSessionMessageList(false, true);
+            }
         }
     }
     render () {
@@ -62,7 +95,7 @@ class Main extends React.Component<Prop> {
             title = '';
         } else {
             let data = target && target.data;
-            title = data.remarkName || data.groupName || data.nickname;
+            title = data && (data.remarkName || data.groupName || data.nickname);
         }
 
         return (
@@ -75,7 +108,7 @@ class Main extends React.Component<Prop> {
                         } else {
                             switch (target.type) {
                             case TARGET_TYPE_SESSION:
-                                return <ChatWindow messageList={target.data.messageList}></ChatWindow>;
+                                return <ChatWindow messageList={target.data.messageList} onScrollToTop={this.handlerScrollToTop}></ChatWindow>;
                             case TARGET_TYPE_FRIEND:
                                 return <UserDetail onClick={this.handlerDetailClick} userInfo={target.data}></UserDetail>;
                             case TARGET_TYPE_GROUP:
@@ -127,7 +160,7 @@ function mapStateToProps (state: State) {
 function mapDispatchToProps (dispatch: any) {
     return {
         setCurrentTarget: (data: Target) => dispatch(createSetCurrentTargetAction(data)),
-        getMessageList: (sessionId: number) => dispatch(createGetWxMessageListAction({ limit: 200, sessionId })),
+        getMessageList: (param: any, replace: boolean) => dispatch(createGetWxMessageListAction(param, replace)),
         createSession: (chatId: any) => dispatch(createCreateWxSessionAction({wxId, chatId}))
     };
 }

@@ -31,3 +31,7 @@ message ModUserInfo {
     string city = 9; //城市
     string label = 10; //标签
 }
+
+message ReportNewMsg {
+    int32 sessionId = 1;
+}

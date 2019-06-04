@@ -6,7 +6,13 @@ import UserItem from '../UserItem/UserItem';
 import FriendApplyItem from '../FriendApplyItem/FriendApplyItem';
 import './SiderTab.less';
 import { State, WxSession, WxFriend, WxGroup, WxFriendApply, Target } from '@/store/types/state';
-import { createGetWxSessionListAction, createGetWxFriendApplyListAction, createGetWxFriendListAction, createGetWxGroupListAction, createSetCurrentTargetAction } from '@/store/action';
+import { createGetWxSessionListAction,
+    createGetWxFriendApplyListAction,
+    createGetWxFriendListAction,
+    createGetWxGroupListAction,
+    createSetCurrentTargetAction,
+    createAllowWxFriendApplyAction
+} from '@/store/action';
 import { getParamValue } from '@/util';
 import { connect } from 'react-redux';
 import { TARGET_TYPE_SESSION, TARGET_TYPE_FRIEND, TARGET_TYPE_GROUP } from '@/store/constant';
@@ -22,7 +28,8 @@ interface Prop {
     getFriendList: () => any,
     getGroupList: () => any,
     getFriendApplyList: () => any,
-    setCurrentTarget: (data: Target) => any
+    setCurrentTarget: (data: Target) => any,
+    replyAllowFriendApply: (toWxId: any, ticket: any) => any
 }
 
 class SiderTab extends React.Component<Prop> {
@@ -42,6 +49,10 @@ class SiderTab extends React.Component<Prop> {
     handlerUserItemClick = (id: any, type: string) => {
         console.log(id, type);
         this.props.setCurrentTarget({ id, type });
+    }
+    handlerFriendApplyAcceptClick = (id: any, ticket: any) => {
+        console.log(id, ticket);
+        this.props.replyAllowFriendApply(id, ticket);
     }
     render () {
         let { sessionList, friendList, groupList, friendApplyList } = this.props;
@@ -80,8 +91,8 @@ class SiderTab extends React.Component<Prop> {
                         <Tabs.TabPane key="3" tab={<span style={{fontSize: '12px'}}>新朋友</span>}>
                             <div className="scroll-box">
                                 {
-                                    friendList.map(item => (
-                                        <FriendApplyItem avatar={item.headImg} id={item.wxId} key={item.wxId} name={item.remarkName || item.nickname} onClick={this.handlerUserItemClick} ticket={''}></FriendApplyItem>
+                                    friendApplyList.map(item => (
+                                        <FriendApplyItem avatar={''} content={item.content} id={item.fromWxId} key={item.fromWxId} name={'zzz'} onClick={this.handlerFriendApplyAcceptClick} ticket={item.ticket}></FriendApplyItem>
                                     ))
                                 }
                             </div>
@@ -100,11 +111,12 @@ function mapStateToProps (state: State) {
 
 function mapDispatchToProps (dispatch: any) {
     return {
-        getSessionList: () => dispatch(createGetWxSessionListAction({wxId, limit: 200})),
-        getFriendList: () => dispatch(createGetWxFriendListAction({wxId, limit: 200})),
-        getGroupList: () => dispatch(createGetWxGroupListAction({wxId, limit: 200})),
-        getFriendApplyList: () => dispatch(createGetWxFriendApplyListAction()),
-        setCurrentTarget: (data: Target) => dispatch(createSetCurrentTargetAction(data))
+        getSessionList: () => dispatch(createGetWxSessionListAction({wxId, limit: 5000})),
+        getFriendList: () => dispatch(createGetWxFriendListAction({wxId, limit: 5000})),
+        getGroupList: () => dispatch(createGetWxGroupListAction({wxId, limit: 5000})),
+        getFriendApplyList: () => dispatch(createGetWxFriendApplyListAction({ wxId, limit: 5000 })),
+        setCurrentTarget: (data: Target) => dispatch(createSetCurrentTargetAction(data)),
+        replyAllowFriendApply: (fromWxId: any, ticket: any) => dispatch(createAllowWxFriendApplyAction({ fromWxId, ticket }))
     };
 }
 

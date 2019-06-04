@@ -25,15 +25,14 @@ http.interceptors.request.use(config => {
 
 http.interceptors.response.use(response => {
     let res = pbDecode('wpb.BaseResponse', new Uint8Array(response.data));
-    console.log(res);
-    // if (res.ret === 200) {
-    let path = getUrlPath(response.config.url as string);
-    let pb = map[path].response;
-    let data = pbDecode(pb, res.data);
-    return data;
-    // } else {
-    //     return Promise.reject(new Error(res.errMsg));
-    // }
+    if (res.ret === 200) {
+        let path = getUrlPath(response.config.url as string);
+        let pb = map[path].response;
+        let data = pbDecode(pb, res.data);
+        return data;
+    } else {
+        return Promise.reject(new Error(res.errMsg));
+    }
 });
 
 

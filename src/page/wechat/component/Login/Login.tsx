@@ -81,7 +81,7 @@ class Login extends React.Component<Prop, State> {
     }
     waitForLogin = () => {
         clearInterval(this.timer);
-        let time = 10;
+        let time = 240;
         let i = 0;
         this.timer = setInterval(() => {
             i += 2;

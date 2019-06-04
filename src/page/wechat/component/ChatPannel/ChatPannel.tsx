@@ -35,6 +35,21 @@ class ChatPannel extends React.Component<Prop, ownState> {
             message: ''
         });
     }
+    handlerPaste = (e: any) => {
+        // console.log(e);
+        // let clipboardData = e.clipboardData;
+        // if (clipboardData.items){
+        //     let  items = clipboardData.items;
+        //     let blob = null;
+        //     for (let i = 0, len = items.length; i < len; i++) {
+        //         console.log(items[i]);
+        //         if (items[i].type.indexOf('image') !== -1) {
+        //             blob = items[i].getAsFile();
+        //         }
+        //     }
+        //     console.log(blob);
+        // }
+    }
     render () {
         return (
             <div className="chat-pannel">
@@ -42,7 +57,7 @@ class ChatPannel extends React.Component<Prop, ownState> {
                     <Button icon="file-add"></Button>
                 </div>
                 <div className="chat-pannel-content">
-                    <textarea className="chat-pannel-input" onChange={this.handlerTextAreaChange} value={this.state.message}></textarea>
+                    <textarea className="chat-pannel-input" onChange={this.handlerTextAreaChange} onPaste={this.handlerPaste} value={this.state.message}></textarea>
                 </div>
                 <div className="chat-pannel-bottom">
                     <Button onClick={this.handlerSendBtnClick}>发送</Button>

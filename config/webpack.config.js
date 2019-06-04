@@ -48,15 +48,14 @@ const lessModuleRegex = /\.module\.less$/;
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
 module.exports = function(webpackEnv) {
-  const isEnvDevelopment = webpackEnv === 'development';
-  const isEnvProduction = webpackEnv === 'production';
+    const isEnvDevelopment = webpackEnv === 'development';
+    const isEnvProduction = webpackEnv === 'production' || webpackEnv === 'onlineTest';
+    const isEnvOnlineTest = webpackEnv === 'onlineTest';
 
   // Webpack uses `publicPath` to determine where the app is being served from.
   // It requires a trailing slash, or the file assets will get an incorrect path.
   // In development, we always serve from the root. This makes config easier.
-  const publicPath = isEnvProduction
-    ? paths.servedPath
-    : isEnvDevelopment && '/';
+  const publicPath = isEnvOnlineTest ? '/wechat-im/' : (isEnvProduction ? paths.servedPath : isEnvDevelopment && '/')
   // Some apps do not use client-side routing with pushState.
   // For these, "homepage" can be set to "." to enable relative asset paths.
   const shouldUseRelativeAssetPaths = publicPath === './';

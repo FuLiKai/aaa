@@ -21,8 +21,10 @@
     "babel-plugin-named-asset-import": "^0.3.2",
     "babel-polyfill": "^6.26.0",
     "babel-preset-react-app": "^9.0.0",
+    "bfj": "^6.1.1",
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
+    "cross-env": "^5.2.0",
     "css-loader": "2.1.1",
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
@@ -81,7 +83,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "proto": "pbjs -t json-module -w es6 -o src/protobuf/protobuf.js  src/protobuf/*.proto"
+    "proto": "pbjs -t json-module -w es6 -o src/protobuf/protobuf.js  src/protobuf/*.proto",
+    "test2": "cross-env NODE_ENV=onlineTest node scripts/build.js"
   },
   "eslintConfig": {
     "extends": "react-app"

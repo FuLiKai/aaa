@@ -97,6 +97,14 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         }
                     }
                 },
+                ReportNewMsg: {
+                    fields: {
+                        sessionId: {
+                            type: 'int32',
+                            id: 1
+                        }
+                    }
+                },
                 WxAccount: {
                     fields: {
                         wxId: {
@@ -376,7 +384,7 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                             type: 'WxFriendApply',
                             id: 1
                         },
-                        NextId: {
+                        nextId: {
                             type: 'int32',
                             id: 2
                         }
@@ -401,7 +409,7 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                             type: 'WxClients',
                             id: 1
                         },
-                        NextId: {
+                        nextId: {
                             type: 'int32',
                             id: 2
                         }
@@ -413,13 +421,9 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                             type: 'string',
                             id: 1
                         },
-                        toWxId: {
-                            type: 'string',
-                            id: 2
-                        },
                         ticket: {
                             type: 'string',
-                            id: 3
+                            id: 2
                         }
                     }
                 },
@@ -555,6 +559,10 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         rawMsg: {
                             type: 'string',
                             id: 5
+                        },
+                        id: {
+                            type: 'int32',
+                            id: 6
                         }
                     }
                 },
@@ -600,6 +608,10 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         sessionId: {
                             type: 'int32',
                             id: 3
+                        },
+                        isNew: {
+                            type: 'bool',
+                            id: 4
                         }
                     }
                 },
@@ -609,10 +621,6 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                             rule: 'repeated',
                             type: 'WxMessage',
                             id: 1
-                        },
-                        nextId: {
-                            type: 'int32',
-                            id: 2
                         }
                     }
                 },
@@ -633,11 +641,11 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                 },
                 SendImageRequest: {
                     fields: {
-                        fromWxId: {
-                            type: 'string',
+                        sessionId: {
+                            type: 'int32',
                             id: 1
                         },
-                        toWxId: {
+                        imgName: {
                             type: 'string',
                             id: 2
                         },
