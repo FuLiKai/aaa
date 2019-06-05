@@ -105,6 +105,22 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         }
                     }
                 },
+                ReportSysMsg: {
+                    fields: {
+                        sessionId: {
+                            type: 'int32',
+                            id: 1
+                        },
+                        content: {
+                            type: 'string',
+                            id: 2
+                        },
+                        createTime: {
+                            type: 'int64',
+                            id: 3
+                        }
+                    }
+                },
                 WxAccount: {
                     fields: {
                         wxId: {

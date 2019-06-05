@@ -35,3 +35,9 @@ message ModUserInfo {
 message ReportNewMsg {
     int32 sessionId = 1;
 }
+
+message ReportSysMsg {
+    int32 sessionId = 1;
+    string content = 2;
+    int64 createTime = 3;
+}

@@ -8,8 +8,9 @@ import { connect } from 'react-redux';
 import { State, Target, WxMessage } from '@/store/types/state';
 import { TARGET_TYPE_SESSION, TARGET_TYPE_FRIEND, TARGET_TYPE_GROUP } from '@/store/constant';
 import './Main.less';
-import { createSetCurrentTargetAction, createGetWxMessageListAction, createCreateWxSessionAction } from '@/store/action';
+import { createSetCurrentTargetAction, createGetWxMessageListAction, createCreateWxSessionAction, createMergeWxMessageListAction } from '@/store/action';
 import createWebSocket from '@/ws';
+import { random } from '@/util';
 
 interface Prop {
     target: any,
@@ -17,7 +18,8 @@ interface Prop {
     setCurrentTarget: (data: Target) => any
     getMessageList: (param: any, replace: boolean) => any
     sessionList: any,
-    createSession: (chatId: any) => any
+    createSession: (chatId: any) => any,
+    mergeMessage: (data: any, sessionId: any, isNew: boolean) => any
 }
 
 class Main extends React.Component<Prop> {
@@ -65,11 +67,31 @@ class Main extends React.Component<Prop> {
     handlerScrollToTop = () => {
         this.getSessionMessageList(false, false);
     }
-    handlerWsMsg = (data: any): any => {
-        let { target } = this.props;
-        if (target && target.type === TARGET_TYPE_SESSION && target.id == data.sessionId) {
-            this.getSessionMessageList(false, true);
+    handlerWsMsg = (msg: any): any => {
+        let data = msg.data;
+        let { target, mergeMessage } = this.props;
+        console.log(msg);
+        switch (msg.cmdId) {
+        case 2: {
+            if (target && target.type === TARGET_TYPE_SESSION && target.id == data.sessionId) {
+                this.getSessionMessageList(false, true);
+            }
+            break;
         }
+        case 4: {
+            let msg = {
+                id: random(-10, -99999999),
+                sessionId: data.sessionId,
+                msgType: -1,
+                rawMsg: JSON.stringify({content: data.content })
+            };
+            mergeMessage([msg], data.sessionId, true);
+            break;
+        }
+        default:
+            break;
+        }
+
     }
     render () {
         let { target, loginInfo } = this.props;
@@ -145,7 +167,8 @@ function mapDispatchToProps (dispatch: any) {
     return {
         setCurrentTarget: (data: Target) => dispatch(createSetCurrentTargetAction(data)),
         getMessageList: (param: any, replace: boolean) => dispatch(createGetWxMessageListAction(param, replace)),
-        createSession: (chatId: any) => dispatch(createCreateWxSessionAction({chatId}))
+        createSession: (chatId: any) => dispatch(createCreateWxSessionAction({chatId})),
+        mergeMessage: (data: any, sessionId: any, isNew: boolean) => dispatch(createMergeWxMessageListAction(data, sessionId, isNew))
     };
 }
 

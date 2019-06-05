@@ -49,7 +49,7 @@ export function* sendTextMessage (action: any) {
     console.log(action);
     try {
         let param = action.param;
-        let data = yield call(fetchSendTextMessage, param);
+        yield call(fetchSendTextMessage, param);
         yield put(createGetWxMessageListAction({ sessionId: action.param.sessionId, limit: 50, isNew: true }, false));
     } catch (error) {
         let userInfo = yield select((state: State) => {

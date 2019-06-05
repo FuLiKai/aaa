@@ -1,5 +1,6 @@
 import { pbEncode, pbDecode } from '../util';
 import eventBus from './event';
+import { cmdPbMap } from '@/protobuf/map';
 
 function createWebSocket (url: string) {
     let ws = new WebSocket(url);
@@ -11,7 +12,10 @@ function createWebSocket (url: string) {
             console.log(reader.result);
             let msg = pbDecode('wpb.BaseRequest', new Uint8Array(reader.result as any));
             console.log(msg);
-            eventBus.emit('message', pbDecode('wpb.ReportNewMsg', msg.data));
+            eventBus.emit('message', {
+                cmdId: msg.cmdId,
+                data: pbDecode(cmdPbMap[msg.cmdId], msg.data)
+            });
         };
     };
 

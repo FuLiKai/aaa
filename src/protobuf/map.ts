@@ -1,8 +1,8 @@
-interface map {
+interface httpPbMap {
     [propName: string]: { request: string, response: string }
 }
 
-const pbMap: map = {
+const pbMap: httpPbMap = {
     '/api/v1/login_qrcode': {
         request: 'wpb.GetLoginQrcodeRequest',
         response:'wpb.GetLoginQrcodeResponse'
@@ -54,3 +54,12 @@ const pbMap: map = {
 };
 
 export default pbMap;
+
+
+interface wsPbMap {
+    [propName: number]: string
+}
+export const cmdPbMap: wsPbMap =  {
+    2: 'wpb.ReportNewMsg',
+    4: 'wpb.ReportSysMsg'
+};

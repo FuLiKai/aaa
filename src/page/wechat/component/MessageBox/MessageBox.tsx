@@ -50,7 +50,9 @@ class MessageBox extends React.Component<Prop> {
                     {
                         list && list.map((msg:any) => (
                             <div className={`${msg.fromWxId === wxId? 'self': 'other'} message-item`} key={msg.id} >
-                                <img className="message-avatar" src={msg.headImg}/>
+                                {
+                                    msg.msgType !== -1 && <img className="message-avatar" src={msg.headImg}/>
+                                }
                                 {
                                     (() => {
                                         switch (msg.msgType) {
@@ -62,6 +64,8 @@ class MessageBox extends React.Component<Prop> {
                                             );
                                         case 2:
                                             return <img className="message-img" src={msg.picUrl}/>;
+                                        case -1:
+                                            return <span className="message-sys" dangerouslySetInnerHTML={{__html: msg.content}}></span>;
                                         default:
                                             return (
                                                 <div className="message-text-wrapper">
@@ -72,7 +76,7 @@ class MessageBox extends React.Component<Prop> {
                                     })()
                                 }
                                 {
-                                    msg.id < 0 && <Icon style={{color: 'red', fontSize: '16px', marginTop: '12px'}} theme="filled" type="info-circle"/>
+                                    msg.id < 0 && msg.msgType !== -1 && <Icon style={{color: 'red', fontSize: '16px', marginTop: '12px'}} theme="filled" type="info-circle"/>
                                 }
                             </div>
                         ))
