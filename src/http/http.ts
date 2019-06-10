@@ -9,7 +9,7 @@ let wxId = '';
 let cmdId = 1;
 
 const http = axios.create({
-    baseURL: 'http://hero.lukou.com:8000',
+    baseURL: 'http://47.98.131.186:8000',
     withCredentials: true,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'

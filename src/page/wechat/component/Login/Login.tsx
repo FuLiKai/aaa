@@ -55,6 +55,8 @@ class Login extends React.Component<Prop, State> {
                 src,
                 isValid: true
             });
+        }).catch(e => {
+            console.error(e);
         });
     }
     handlerGetQrCodeBtnClick = () => {

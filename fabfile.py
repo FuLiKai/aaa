@@ -92,7 +92,7 @@ def make_source():
     if not run('test -d %s && echo 1' % ROOT_DIR):
         run('mkdir %s' % ROOT_DIR)
     if not run('test -d %s && echo 1' % SOURCE_DIR):
-        run('git clone git@code.lukou.com:develop/games.git %s' % SOURCE_DIR)
+        run('git clone git@code.lukou.com:frontend/wechat-im.git %s' % SOURCE_DIR)
     with cd(SOURCE_DIR):
         run('git pull origin master')
         run('npm install')
