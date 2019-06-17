@@ -102,7 +102,7 @@ def make_source():
 def sync_source(remote):
     env.host_string = remote
     remote_dir = '/home/lukou/app/lannister/'
-    remote_asset_dir = os.path.join(remote_dir, 'games')
+    remote_asset_dir = os.path.join(remote_dir, 'wechat-im')
     if not run('test -d %s && echo 1' % remote_asset_dir):
         run('mkdir -p %s' % remote_asset_dir)
 

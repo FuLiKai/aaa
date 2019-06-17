@@ -19,6 +19,7 @@ class App extends React.Component<Object, { clients: any }> {
             start: 0,
             limit: 1000
         }).then(res => {
+            console.log(res);
             this.setState({
                 clients: res
             });

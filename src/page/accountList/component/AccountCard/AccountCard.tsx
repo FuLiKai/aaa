@@ -18,6 +18,9 @@ export default class AccountCard extends React.Component<Prop> {
         // this.showModal();
         window.open(`./wechat.html?alias=${wxAlias}`);
     }
+    hanlderLogoutBtnClick = () => {
+        alert('暂不支持下线');
+    }
     hanlderDeleteBtnClick = () => {
         alert('暂不支持删除');
     }
@@ -38,7 +41,7 @@ export default class AccountCard extends React.Component<Prop> {
                                 account={item}
                                 onDelete={this.hanlderDeleteBtnClick}
                                 onLogin={this.hanlderLoginBtnClick}
-                                onLogout={this.hanlderLoginBtnClick}
+                                onLogout={this.hanlderLogoutBtnClick}
                             ></AccountItem>
                         </Card.Grid>
                     ))
