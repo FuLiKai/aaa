@@ -1,13 +1,15 @@
 import React from 'react';
 import { Button } from 'antd';
 import './ChatPannel.less';
-import { createSendTextMessageAction } from '@/store/action';
+import { createSendTextMessageAction, createSendImageMessageAction } from '@/store/action';
 import { connect } from 'react-redux';
 import { State, Target } from '@/store/types/state';
+import { StringToUint8Array } from '@/util';
 
 interface Prop {
     target: Target,
-    onSend: (param: any) => any
+    sendTextMsg: (param: any) => any,
+    sendImageMsg: (param: any) => any
 }
 interface ownState {
     message: any
@@ -27,7 +29,7 @@ class ChatPannel extends React.Component<Prop, ownState> {
     }
     handlerSendBtnClick = () => {
         if (!this.state.message) return;
-        this.props.onSend({
+        this.props.sendTextMsg({
             sessionId: this.props.target.id,
             content: this.state.message
         });
@@ -36,19 +38,26 @@ class ChatPannel extends React.Component<Prop, ownState> {
         });
     }
     handlerPaste = (e: any) => {
-        // console.log(e);
-        // let clipboardData = e.clipboardData;
-        // if (clipboardData.items){
-        //     let  items = clipboardData.items;
-        //     let blob = null;
-        //     for (let i = 0, len = items.length; i < len; i++) {
-        //         console.log(items[i]);
-        //         if (items[i].type.indexOf('image') !== -1) {
-        //             blob = items[i].getAsFile();
-        //         }
-        //     }
-        //     console.log(blob);
-        // }
+        let clipboardData = e.clipboardData;
+        if (clipboardData.items){
+            let  items = clipboardData.items;
+            let blob: any = null;
+            for (let i = 0, len = items.length; i < len; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    blob = items[i].getAsFile();
+                }
+            }
+            if (!blob) return;
+            let fs = new FileReader();
+            fs.readAsBinaryString(blob);
+            fs.onloadend = () => {
+                this.props.sendImageMsg({
+                    sessionId: this.props.target.id,
+                    imgName: blob.name,
+                    imgData: StringToUint8Array(fs.result as string)
+                });
+            };
+        }
     }
     render () {
         return (
@@ -75,8 +84,11 @@ function mapStateToProps (state: State) {
 
 function mapDispatchToProps (dispatch: any) {
     return {
-        onSend: (param: any) => {
+        sendTextMsg: (param: any) => {
             dispatch(createSendTextMessageAction(param));
+        },
+        sendImageMsg: (param: any) => {
+            dispatch(createSendImageMessageAction(param));
         }
     };
 }

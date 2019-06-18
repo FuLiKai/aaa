@@ -35,8 +35,8 @@ export default class AccountItem extends React.Component<Prop> {
         return (
             <div className="account-item" onClick={this.handlerItemClick}>
                 <div>
-                    <span>{nickname}</span>
-                    <span>{wxAlias}</span>
+                    <span className="name">{nickname}</span>
+                    <span className="alias">{wxAlias}</span>
                 </div>
                 <div>
                     <Button onClick={this.handlerLoginBtnClick} type={status ? 'default' : 'primary'}>{status ? '下线' : '上线'}</Button>

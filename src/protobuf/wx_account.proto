@@ -20,6 +20,7 @@ message WxClient {
     string ipAddr = 3;    // ip地址
     string version = 4;   //版本号
     int32 status = 5;   // 在线 离线状态
+    string nickname = 6;  //微信昵称
 }
 
 message WxFriend {
@@ -36,17 +37,17 @@ message WxFriend {
 }
 
 message WxGroup {
-    string groupId = 1;
-    string groupName = 2;
-    string groupHeadImg = 3;
-    string ownerId = 4;
+    string groupId = 1;  // 群号
+    string groupName = 2;  // 群名
+    string groupHeadImg = 3; // 群头像
+    string ownerId = 4;  // 群主
 }
 
 message WxFriendApply {
     string fromWxId = 1;
     string content = 2;
-    string ticket = 3;
-    int32 status = 4;
+    string ticket = 3;   // 凭证
+    int32 status = 4;   // 状态: 0 待处理 1 通过 2忽略
     string nickname = 5;
     string headImg = 6;
     int64 time = 7;
@@ -62,7 +63,8 @@ message WxClients {
     repeated WxClient clients = 2;
 }
 
-message GetWxAccountListRequest {   //获取系统微信账号列表
+//获取系统微信账号列表
+message GetWxAccountListRequest {
     int32 start = 1;
     int32 limit = 2;
 }
@@ -72,6 +74,7 @@ message GetWxAccountListResponse {
     int32 nextId = 2;
 }
 
+// 获取好友列表
 message GetWxFriendListRequest {
     int32 start = 1;
     int32 limit = 2;
@@ -82,6 +85,7 @@ message GetWxFriendListResponse {
     int32  nextId = 2;
 }
 
+// 获取群列表
 message GetWxGroupListRequest {
     int32 start = 1;
     int32 limit = 2;
@@ -92,6 +96,7 @@ message GetWxGroupListResponse {
     int32 nextId = 2;
 }
 
+// 获取好友申请列表
 message GetWxFriendApplyListRequest {
     int32 start = 1;
     int32 limit = 2;
@@ -102,6 +107,7 @@ message GetWxFriendApplyListResponse {
     int32 nextId = 2;
 }
 
+// 获取客户端列表
 message GetWxClientListRequest {
     int32 start = 1;
     int32 limit = 2;
@@ -112,6 +118,7 @@ message GetWxClientListResponse {
     int32 nextId = 2;
 }
 
+// 同意好友申请
 message AgreeFriendApplyRequest {
     string fromWxId = 1;
     string ticket = 2;
@@ -120,6 +127,7 @@ message AgreeFriendApplyRequest {
 message AgreeFriendApplyResponse {
 }
 
+// 获取账号详情
 message GetAccountDetailRequest {
 }
 

@@ -47,6 +47,10 @@ const pbMap: httpPbMap = {
         request: 'wpb.SendTextRequest',
         response:'wpb.SendTextResponse'
     },
+    '/api/v1/send_img': {
+        request: 'wpb.SendImageRequest',
+        response:'wpb.SendImageResponse'
+    },
     '/api/v1/agree_apply': {
         request: 'wpb.AgreeFriendApplyRequest',
         response:'wpb.AgreeFriendApplyResponse'

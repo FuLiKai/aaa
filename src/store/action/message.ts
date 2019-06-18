@@ -1,5 +1,5 @@
 import { BaseAction } from '../types/action';
-import { ACTION_GET_MESSAGE_LIST, ACTION_SET_MESSAGE_LIST, ACTION_SEND_TEXT_MESSAGE, ACTION_MERGE_MESSAGE_LIST } from '../constant';
+import { ACTION_GET_MESSAGE_LIST, ACTION_SET_MESSAGE_LIST, ACTION_SEND_TEXT_MESSAGE, ACTION_MERGE_MESSAGE_LIST, ACTION_SEND_IMAGE_MESSAGE } from '../constant';
 import { WxMessage } from '../types/state';
 
 export function createGetWxMessageListAction (param: any, replace: boolean) : BaseAction {
@@ -30,6 +30,13 @@ export function createMergeWxMessageListAction (data: Array<WxMessage>, sessionI
 export function createSendTextMessageAction (param: any) {
     return {
         type: ACTION_SEND_TEXT_MESSAGE,
+        param
+    };
+}
+
+export function createSendImageMessageAction (param: any) {
+    return {
+        type: ACTION_SEND_IMAGE_MESSAGE,
         param
     };
 }

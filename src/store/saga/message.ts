@@ -1,7 +1,7 @@
 import { put, takeEvery, call, all, select, takeLeading } from 'redux-saga/effects';
-import { ACTION_GET_MESSAGE_LIST, ACTION_SEND_TEXT_MESSAGE } from '../constant';
+import { ACTION_GET_MESSAGE_LIST, ACTION_SEND_TEXT_MESSAGE, ACTION_SEND_IMAGE_MESSAGE } from '../constant';
 import { createSetWxMessageListAction, createGetWxMessageListAction, createMergeWxMessageListAction } from '../action';
-import { fetchMessageList, fetchSendTextMessage } from '../../http';
+import { fetchMessageList, fetchSendTextMessage, fetchSendImageMessage } from '../../http';
 import { random } from '@/util';
 import { State } from '../types/state';
 
@@ -70,6 +70,17 @@ export function* sendTextMessage (action: any) {
     }
 }
 
+export function *sendImageMessage(action: any) {
+    console.log(action);
+    try {
+        let param = action.param;
+        yield call(fetchSendImageMessage, param);
+        yield put(createGetWxMessageListAction({ sessionId: action.param.sessionId, limit: 50, isNew: true }, false));
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 export function* watchGetMessageList () {
     yield takeLeading(ACTION_GET_MESSAGE_LIST, getMessageList);
 }
@@ -78,10 +89,14 @@ export function* watchSendTextMessage () {
     yield takeEvery(ACTION_SEND_TEXT_MESSAGE, sendTextMessage);
 }
 
+export function* watchSendImageMessage () {
+    yield takeEvery(ACTION_SEND_IMAGE_MESSAGE, sendImageMessage);
+}
 
 export function* watchMessage () {
     yield all([
         watchGetMessageList(),
-        watchSendTextMessage()
+        watchSendTextMessage(),
+        watchSendImageMessage()
     ]);
 }

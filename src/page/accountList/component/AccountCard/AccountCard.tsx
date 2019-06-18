@@ -34,7 +34,7 @@ export default class AccountCard extends React.Component<Prop> {
             >
                 {
                     list.map((item: any) => (
-                        <Card.Grid key={item.wxId}
+                        <Card.Grid key={item.wxId || item.wxAlias}
                             style={{width: '100%', padding: '10px'}}
                         >
                             <AccountItem

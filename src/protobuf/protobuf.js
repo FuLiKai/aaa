@@ -182,6 +182,10 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         status: {
                             type: 'int32',
                             id: 5
+                        },
+                        nickname: {
+                            type: 'string',
+                            id: 6
                         }
                     }
                 },

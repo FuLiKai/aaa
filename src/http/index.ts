@@ -48,6 +48,10 @@ export function fetchSendTextMessage (param: any) : Promise<any> {
     return http.post('/api/v1/send_text', param);
 }
 
+export function fetchSendImageMessage (param: any) : Promise<any> {
+    return http.post('/api/v1/send_img', param);
+}
+
 export function sendAgreeFriendApply (param: any) : Promise<any> {
     return http.post('/api/v1/agree_apply', param);
 }

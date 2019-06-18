@@ -3,6 +3,6 @@ export { createSetCurrentTargetAction } from './currentTarget';
 export { createGetWxFriendListAction, createSetWxFriendListAction } from './friend';
 export { createGetWxFriendApplyListAction, createSetWxFriendApplyListAction, createAllowWxFriendApplyAction } from './friendApply';
 export { createGetWxGroupListAction, createSetWxGroupListAction } from './group';
-export { createGetWxMessageListAction, createSetWxMessageListAction, createSendTextMessageAction, createMergeWxMessageListAction } from './message';
+export { createGetWxMessageListAction, createSetWxMessageListAction, createSendTextMessageAction, createMergeWxMessageListAction, createSendImageMessageAction } from './message';
 export { createGetWxSessionListAction, createSetWxSessionListAction, createCreateWxSessionAction } from './session';
 export { createSetLoginlAction } from './loginInfo';
