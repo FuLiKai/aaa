@@ -133,6 +133,7 @@ message SearchWxFriendListRequest {
 
 message SearchWxFriendListResponse {
     repeated WxFriend list = 1;
+    int32 nextId = 2;
 }
 
 // 获取客户端列表

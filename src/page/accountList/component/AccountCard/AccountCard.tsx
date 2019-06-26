@@ -23,11 +23,7 @@ export default class AccountCard extends React.Component<Prop> {
     }
     handlerRestartBtnClick = (e: any) => {
         fetchRestart(e).then(res => {
-            if (res.ret === 200) {
-                message.success('重启成功');
-            } else {
-                message.error('重启失败');
-            }
+            message.success('重启成功');
         }).catch(e => {
             message.error('重启失败');
         });
