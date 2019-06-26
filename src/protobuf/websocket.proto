@@ -32,10 +32,12 @@ message ModUserInfo {
     string label = 10; //标签
 }
 
+// 推送好友/群消息
 message ReportNewMsg {
     int32 sessionId = 1;
 }
 
+// 推送系统消息
 message ReportSysMsg {
     int32 sessionId = 1;
     string content = 2;

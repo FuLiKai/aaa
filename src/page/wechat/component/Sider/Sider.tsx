@@ -2,13 +2,11 @@ import React from 'react';
 import { Layout, Input } from 'antd';
 import SiderHeader from '../SiderHeader/SiderHeader';
 import SiderTab from '../SiderTab/SiderTab';
+import Search from '../Search/Search';
 import './Sider.less';
 import { State, WxAccountDetail } from '@/store/types/state';
 import { createGetAccountDetailAction } from '@/store/action';
-import { getParamValue } from '@/util';
 import { connect } from 'react-redux';
-
-let wxId = getParamValue('id');
 
 interface Prop {
     accountDetail: any,
@@ -23,7 +21,7 @@ class Sider extends React.Component<Prop> {
         return (
             <Layout.Sider className="sider" width={280}>
                 <SiderHeader avatar={this.props.accountDetail.account.headImg} title={this.props.accountDetail.account.nickname}></SiderHeader>
-                <Input.Search className="sider-search" placeholder="搜索"></Input.Search>
+                <Search></Search>
                 <SiderTab></SiderTab>
             </Layout.Sider>
         );

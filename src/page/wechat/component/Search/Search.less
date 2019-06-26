@@ -1,0 +1,42 @@
+.search-container {
+    .sider-search {
+        margin: 0 18px 6px 18px;
+        width: calc(100% - 36px);
+        .ant-input {
+            background: #26292e;
+            color: #fff;
+            border: none;
+            outline: none;
+        }
+        svg {
+            fill: #fff;
+        }
+    }
+    .scroll-container {
+        position: absolute;
+        z-index: 99;
+        width: calc(100% - 36px);
+        left: 18px;
+        background: white;
+        border: 1px solid black;
+        height: 300px;
+        overflow: auto;
+        &::-webkit-scrollbar {
+            display: block;
+            width: 6px;
+        }
+        &::-webkit-scrollbar-thumb {
+            border-radius: 3px;
+            background-color: #c3c3c3;
+        }
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        &.hidden {
+            display: none;
+        }
+        &.visible {
+            display: block;
+        }
+    }
+}

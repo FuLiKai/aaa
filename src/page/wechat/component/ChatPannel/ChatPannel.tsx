@@ -50,7 +50,7 @@ class ChatPannel extends React.Component<Prop, ownState> {
             if (!blob) return;
             let fs = new FileReader();
             fs.readAsBinaryString(blob);
-            fs.onloadend = () => {
+            fs.onload = () => {
                 this.props.sendImageMsg({
                     sessionId: this.props.target.id,
                     imgName: blob.name,

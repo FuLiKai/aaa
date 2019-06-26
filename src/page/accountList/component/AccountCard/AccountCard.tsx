@@ -1,28 +1,36 @@
 import React from 'react';
-import { Card, Button, Modal } from 'antd';
+import { Card, message } from 'antd';
 import AccountItem from '../AccountItem/AccountItem';
-import { fetchQrCode, fetchLoginStatus } from '@/http';
-import { Uint8ArryToString } from '@/util';
+import { fetchRestart } from '@/http';
 
 interface Prop {
     ip: string,
     list: []
 }
-// import accountList from '@/mock/accountList.json';
 
 export default class AccountCard extends React.Component<Prop> {
     constructor (props: Prop) {
         super(props);
     }
-    hanlderLoginBtnClick = (wxAlias: string) => {
-        // this.showModal();
+    handlerLoginBtnClick = (wxAlias: string) => {
         window.open(`./wechat.html?alias=${wxAlias}`);
     }
-    hanlderLogoutBtnClick = () => {
-        alert('暂不支持下线');
+    handlerLogoutBtnClick = () => {
+        message.error('暂不支持下线');
     }
-    hanlderDeleteBtnClick = () => {
-        alert('暂不支持删除');
+    handlerDeleteBtnClick = () => {
+        message.error('暂不支持删除');
+    }
+    handlerRestartBtnClick = (e: any) => {
+        fetchRestart(e).then(res => {
+            if (res.ret === 200) {
+                message.success('重启成功');
+            } else {
+                message.error('重启失败');
+            }
+        }).catch(e => {
+            message.error('重启失败');
+        });
     }
     render () {
         let {ip, list} = this.props;
@@ -39,9 +47,10 @@ export default class AccountCard extends React.Component<Prop> {
                         >
                             <AccountItem
                                 account={item}
-                                onDelete={this.hanlderDeleteBtnClick}
-                                onLogin={this.hanlderLoginBtnClick}
-                                onLogout={this.hanlderLogoutBtnClick}
+                                onDelete={this.handlerDeleteBtnClick}
+                                onLogin={this.handlerLoginBtnClick}
+                                onLogout={this.handlerLogoutBtnClick}
+                                onRestart={this.handlerRestartBtnClick}
                             ></AccountItem>
                         </Card.Grid>
                     ))

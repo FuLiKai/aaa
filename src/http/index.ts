@@ -55,3 +55,15 @@ export function fetchSendImageMessage (param: any) : Promise<any> {
 export function sendAgreeFriendApply (param: any) : Promise<any> {
     return http.post('/api/v1/agree_apply', param);
 }
+
+export function uploadImage (param: any, option?: any) : Promise<any> {
+    return http.post('/api/v1/upload', param, option);
+}
+
+export function fetchFriendSearch (param: any) : Promise<any> {
+    return http.post('/api/v1/friend/search', param);
+}
+
+export function fetchRestart (param: any) : Promise<any> {
+    return http.post('/api/v1/client/restart', param);
+}

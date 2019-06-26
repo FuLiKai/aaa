@@ -4,6 +4,7 @@ import CustomTabBar from '../CustomTabBar/CustomTabBar';
 import ChatItem from '../ChatItem/ChatItem';
 import UserItem from '../UserItem/UserItem';
 import FriendApplyItem from '../FriendApplyItem/FriendApplyItem';
+import Moments from '../Moments/Moments';
 import './SiderTab.less';
 import { State, WxSession, WxFriend, WxGroup, WxFriendApply, Target, WxAccountDetail } from '@/store/types/state';
 import { createGetWxSessionListAction,
@@ -143,6 +144,9 @@ class SiderTab extends React.Component<Prop, ownState> {
                             </div>
                         </Tabs.TabPane>
                     </Tabs>
+                </Tabs.TabPane>
+                <Tabs.TabPane key="3" tab={<i className="iconfont icon-pengyouquan"></i>}>
+                    <Moments></Moments>
                 </Tabs.TabPane>
             </Tabs>
         );

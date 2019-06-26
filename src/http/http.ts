@@ -9,8 +9,8 @@ let wxId = '';
 let cmdId = 1;
 
 const http = axios.create({
-    // baseURL: 'http://47.98.131.186:8000',
-    baseURL: 'http://hero.lukou.com:8000',
+    baseURL: 'http://47.98.131.186:8000',
+    // baseURL: 'http://hero.lukou.com:8000',
     withCredentials: true,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -20,22 +20,29 @@ const http = axios.create({
 
 http.interceptors.request.use(config => {
     let path = getUrlPath(config.url as string);
-    let pb = map[path].request;
-    let baseReq: any = {
-        wxAlias,
-        wxId,
-        cmdId
-    };
-    if (store) {
-        let loginInfo = store.getState().loginInfo;
-        if (loginInfo.wxAlias) {
-            baseReq.wxAlias = loginInfo.wxAlias;
+    let urlConfig = map[path];
+    let pb = urlConfig && urlConfig.request;
+    let wrap = urlConfig && urlConfig.wrap;
+    let baseReq: any;
+    if (wrap) {
+        baseReq = {
+            wxAlias,
+            wxId,
+            cmdId
+        };
+        if (store) {
+            let loginInfo = store.getState().loginInfo;
+            if (loginInfo.wxAlias) {
+                baseReq.wxAlias = loginInfo.wxAlias;
+            }
+            if (loginInfo.wxId) {
+                baseReq.wxId = loginInfo.wxId;
+            }
         }
-        if (loginInfo.wxId) {
-            baseReq.wxId = loginInfo.wxId;
-        }
+        baseReq.data = pbEncode(pb, config.data);
+    } else {
+        baseReq = config.data;
     }
-    baseReq.data = pbEncode(pb, config.data);
     let reqData = pbEncode('wpb.BaseRequest', baseReq);
     reqData = btoa(Uint8ArryToString(reqData));
     let form = new FormData();

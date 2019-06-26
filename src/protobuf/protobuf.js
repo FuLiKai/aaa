@@ -410,31 +410,6 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                         }
                     }
                 },
-                GetWxClientListRequest: {
-                    fields: {
-                        start: {
-                            type: 'int32',
-                            id: 1
-                        },
-                        limit: {
-                            type: 'int32',
-                            id: 2
-                        }
-                    }
-                },
-                GetWxClientListResponse: {
-                    fields: {
-                        list: {
-                            rule: 'repeated',
-                            type: 'WxClients',
-                            id: 1
-                        },
-                        nextId: {
-                            type: 'int32',
-                            id: 2
-                        }
-                    }
-                },
                 AgreeFriendApplyRequest: {
                     fields: {
                         fromWxId: {
@@ -460,6 +435,62 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                             id: 1
                         }
                     }
+                },
+                SearchWxFriendListRequest: {
+                    fields: {
+                        start: {
+                            type: 'int32',
+                            id: 1
+                        },
+                        limit: {
+                            type: 'int32',
+                            id: 2
+                        },
+                        q: {
+                            type: 'string',
+                            id: 3
+                        }
+                    }
+                },
+                SearchWxFriendListResponse: {
+                    fields: {
+                        list: {
+                            rule: 'repeated',
+                            type: 'WxFriend',
+                            id: 1
+                        }
+                    }
+                },
+                GetWxClientListRequest: {
+                    fields: {
+                        start: {
+                            type: 'int32',
+                            id: 1
+                        },
+                        limit: {
+                            type: 'int32',
+                            id: 2
+                        }
+                    }
+                },
+                GetWxClientListResponse: {
+                    fields: {
+                        list: {
+                            rule: 'repeated',
+                            type: 'WxClients',
+                            id: 1
+                        },
+                        nextId: {
+                            type: 'int32',
+                            id: 2
+                        }
+                    }
+                },
+                RestartWxClientRequest: {
+                    fields: {}
+                },
+                RestartWxClientResponse: {
+                    fields: {}
                 },
                 GetLoginQrcodeRequest: {
                     fields: {}
@@ -705,6 +736,24 @@ const $root = ($protobuf.roots['default'] || ($protobuf.roots['default'] = new $
                     fields: {
                         session: {
                             type: 'WxSession',
+                            id: 1
+                        }
+                    }
+                },
+                UploadImageRequest: {
+                    fields: {
+                        imgList: {
+                            rule: 'repeated',
+                            type: 'bytes',
+                            id: 1
+                        }
+                    }
+                },
+                UploadImageResponse: {
+                    fields: {
+                        imgUrls: {
+                            rule: 'repeated',
+                            type: 'string',
                             id: 1
                         }
                     }

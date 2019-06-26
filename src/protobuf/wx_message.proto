@@ -22,7 +22,8 @@ message WxMessage {
     int64 time = 7;
 }
 
-message GetWxSessionListRequest {   // 获取用户会话列表
+// 获取用户会话列表
+message GetWxSessionListRequest {
     int32 start = 1;
     int32 limit = 2;
 }
@@ -32,7 +33,8 @@ message GetWxSessionListResponse {
     int32 nextId = 2;
 }
 
-message GetWxMessageListRequest {   //获取会话消息列表
+//获取会话消息列表
+message GetWxMessageListRequest {
     int32 start = 1;
     int32 limit = 2;
     int32 sessionId = 3;
@@ -43,6 +45,7 @@ message GetWxMessageListResponse {
     repeated WxMessage list = 1;
 }
 
+// 发送文本消息
 message SendTextRequest {
     int32 sessionId = 1;
     string content = 2;
@@ -52,6 +55,7 @@ message SendTextResponse {
 
 }
 
+// 发送图片消息
 message SendImageRequest {
     int32 sessionId = 1;
     string imgName = 2;
@@ -62,6 +66,7 @@ message SendImageResponse {
 
 }
 
+// 发送图文消息
 message SendLinkRequest {
     string fromWxId = 1;
     string toWxId = 2;
@@ -75,10 +80,20 @@ message SendLinkResponse {
 
 }
 
+// 创建会话
 message CreateSessionRequest {
     string chatId = 1;
 }
 
 message CreateSessionResponse {
     WxSession session = 1;
+}
+
+// 上传图片
+message UploadImageRequest {
+    repeated bytes imgList = 1;
+}
+
+message UploadImageResponse {
+    repeated string imgUrls = 1;
 }

@@ -107,17 +107,6 @@ message GetWxFriendApplyListResponse {
     int32 nextId = 2;
 }
 
-// 获取客户端列表
-message GetWxClientListRequest {
-    int32 start = 1;
-    int32 limit = 2;
-}
-
-message GetWxClientListResponse {
-    repeated WxClients list = 1;
-    int32 nextId = 2;
-}
-
 // 同意好友申请
 message AgreeFriendApplyRequest {
     string fromWxId = 1;
@@ -133,4 +122,33 @@ message GetAccountDetailRequest {
 
 message GetAccountDetailResponse {
     WxAccountDetail detail = 1;
+}
+
+// 搜索好友列表
+message SearchWxFriendListRequest {
+    int32 start = 1;
+    int32 limit = 2;
+    string q = 3;
+}
+
+message SearchWxFriendListResponse {
+    repeated WxFriend list = 1;
+}
+
+// 获取客户端列表
+message GetWxClientListRequest {
+    int32 start = 1;
+    int32 limit = 2;
+}
+
+message GetWxClientListResponse {
+    repeated WxClients list = 1;
+    int32 nextId = 2;
+}
+
+// 重启客户端
+message RestartWxClientRequest {
+}
+
+message RestartWxClientResponse {
 }
