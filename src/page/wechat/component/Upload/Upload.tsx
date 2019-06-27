@@ -6,7 +6,7 @@ import './Upload.less';
 const fr = new FileReader();
 
 interface Prop {
-    // onChange: (e: any) => any
+    onChange: (e: any) => any
 }
 
 interface State {
@@ -43,7 +43,7 @@ class Moments extends React.Component<Prop, State> {
         });
     }
     handlerChange = (e:any) => {
-        console.log(e);
+        this.props.onChange(e.fileList);
     }
     handleCancel = (e: any) => {
         this.setState({

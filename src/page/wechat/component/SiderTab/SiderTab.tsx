@@ -145,9 +145,9 @@ class SiderTab extends React.Component<Prop, ownState> {
                         </Tabs.TabPane>
                     </Tabs>
                 </Tabs.TabPane>
-                <Tabs.TabPane key="3" tab={<i className="iconfont icon-pengyouquan"></i>}>
+                {/* <Tabs.TabPane key="3" tab={<i className="iconfont icon-pengyouquan"></i>}>
                     <Moments></Moments>
-                </Tabs.TabPane>
+                </Tabs.TabPane> */}
             </Tabs>
         );
     }

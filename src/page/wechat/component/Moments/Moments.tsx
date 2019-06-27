@@ -1,6 +1,6 @@
 import React from 'react';
 import './Moments.less';
-import Upload from '../Upload/Upload';
+import MomentShare from '../MomentShare/MomentShare';
 
 interface Prop {
     // onChange: (e: any) => any
@@ -13,7 +13,7 @@ class Moments extends React.Component<Prop> {
     render() {
         return (
             <div>
-                <Upload></Upload>
+                <MomentShare></MomentShare>
             </div>
         );
     }
