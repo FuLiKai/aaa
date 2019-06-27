@@ -11,6 +11,7 @@ import './Main.less';
 import { createSetCurrentTargetAction, createGetWxMessageListAction, createCreateWxSessionAction, createMergeWxMessageListAction } from '@/store/action';
 import createWebSocket from '@/ws';
 import { random } from '@/util';
+import httpConfig from '@/http/config';
 
 interface Prop {
     target: any,
@@ -24,8 +25,7 @@ interface Prop {
 
 class Main extends React.Component<Prop> {
     componentDidMount () {
-        let ws = createWebSocket('ws://47.98.131.186:8000/ws/v1');
-        // let ws = createWebSocket('ws://hero.lukou.com:8000/ws/v1');
+        let ws = createWebSocket(`ws://${httpConfig.origin}/ws/v1`);
         ws.send({
             cmdId: 1,
             ...this.props.loginInfo

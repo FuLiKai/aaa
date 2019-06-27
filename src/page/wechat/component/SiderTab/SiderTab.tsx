@@ -7,12 +7,14 @@ import FriendApplyItem from '../FriendApplyItem/FriendApplyItem';
 import Moments from '../Moments/Moments';
 import './SiderTab.less';
 import { State, WxSession, WxFriend, WxGroup, WxFriendApply, Target, WxAccountDetail } from '@/store/types/state';
-import { createGetWxSessionListAction,
+import {
+    createGetWxSessionListAction,
     createGetWxFriendApplyListAction,
     createGetWxFriendListAction,
     createGetWxGroupListAction,
     createSetCurrentTargetAction,
-    createAllowWxFriendApplyAction
+    createAllowWxFriendApplyAction,
+    createUpdateSingleSessionAction
 } from '@/store/action';
 import { connect } from 'react-redux';
 import { TARGET_TYPE_SESSION, TARGET_TYPE_FRIEND, TARGET_TYPE_GROUP } from '@/store/constant';
@@ -28,7 +30,8 @@ interface Prop {
     getGroupList: () => any,
     getFriendApplyList: () => any,
     setCurrentTarget: (data: Target) => any,
-    replyAllowFriendApply: (toWxId: any, ticket: any) => any
+    replyAllowFriendApply: (toWxId: any, ticket: any) => any,
+    updateSingleSession: (data: any) => any
 }
 
 interface ownState {
@@ -78,10 +81,14 @@ class SiderTab extends React.Component<Prop, ownState> {
             }
         }
     }
-    handlerChatItemClick = (id: any) => {
+    handlerChatItemClick = (chatItem: any) => {
         this.props.setCurrentTarget({
-            id,
+            id: chatItem.id,
             type: TARGET_TYPE_SESSION
+        });
+        chatItem.status && this.props.updateSingleSession({
+            sessionId: chatItem.id,
+            status: 0
         });
     }
     handlerUserItemClick = (id: any, type: string) => {
@@ -137,8 +144,8 @@ class SiderTab extends React.Component<Prop, ownState> {
                         <Tabs.TabPane key="23" tab={<span style={{fontSize: '12px'}}>新朋友</span>}>
                             <div className="scroll-box">
                                 {
-                                    friendApplyList.map(item => (
-                                        <FriendApplyItem avatar={item.headImg} content={item.content} id={item.fromWxId} key={item.fromWxId} name={item.nickname} onClick={this.handlerFriendApplyAcceptClick} status={item.status} ticket={item.ticket}></FriendApplyItem>
+                                    friendApplyList.map((item, index) => (
+                                        <FriendApplyItem avatar={item.headImg} content={item.content} id={item.fromWxId} key={index} name={item.nickname} onClick={this.handlerFriendApplyAcceptClick} status={item.status} ticket={item.ticket}></FriendApplyItem>
                                     ))
                                 }
                             </div>
@@ -165,7 +172,8 @@ function mapDispatchToProps (dispatch: any) {
         getGroupList: () => dispatch(createGetWxGroupListAction({limit: 5000})),
         getFriendApplyList: () => dispatch(createGetWxFriendApplyListAction({limit: 5000 })),
         setCurrentTarget: (data: Target) => dispatch(createSetCurrentTargetAction(data)),
-        replyAllowFriendApply: (fromWxId: any, ticket: any) => dispatch(createAllowWxFriendApplyAction({ fromWxId, ticket }))
+        replyAllowFriendApply: (fromWxId: any, ticket: any) => dispatch(createAllowWxFriendApplyAction({ fromWxId, ticket })),
+        updateSingleSession: (data: any) => dispatch(createUpdateSingleSessionAction(data))
     };
 }
 

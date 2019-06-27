@@ -1,6 +1,7 @@
 import React from 'react';
 import './MessageBox.less';
-import { Icon, Spin } from 'antd';
+import { Icon, Spin, Modal } from 'antd';
+import msgType from './msgType';
 
 interface Prop {
     messageList: Array<any>
@@ -9,20 +10,40 @@ interface Prop {
 }
 
 class MessageBox extends React.Component<Prop> {
+    static defaultProps = {
+        messageList: []
+    }
     constructor (props: Prop) {
         super(props);
         this.myRef = React.createRef();
     }
+    state = {
+        previewVisible: false,
+        previewImage: ''
+    }
     componentDidMount () {
         this.scrollToBottom();
     }
-    componentDidUpdate () {
+    componentDidUpdate (prevProps: Prop) {
+        if (prevProps.messageList.length === this.props.messageList.length) return;
         this.scrollToBottom();
     }
     handlerScroll = (e: any) => {
         if (e.target.scrollTop === 0) {
             this.props.onScrollToTop();
         }
+    }
+    handleCancel = () => {
+        this.setState({
+            previewVisible: false,
+            previewImage: ''
+        });
+    }
+    handlerPreview = (url: string) => {
+        this.setState({
+            previewVisible: true,
+            previewImage: url
+        });
     }
     myRef: React.RefObject<HTMLObjectElement>;
     scrollToBottom = () => {
@@ -31,6 +52,7 @@ class MessageBox extends React.Component<Prop> {
     }
     render () {
         let { messageList, wxId } = this.props;
+        let { previewImage, previewVisible } = this.state;
         let list;
         if (Array.isArray(messageList)) {
             list = messageList.map(msg => {
@@ -52,20 +74,21 @@ class MessageBox extends React.Component<Prop> {
                             list && list.map((msg:any) => (
                                 <div className={`${msg.fromWxId === wxId? 'self': 'other'} message-item`} key={msg.id} >
                                     {
-                                        msg.msgType !== -1 && <img className="message-avatar" src={msg.headImg}/>
+                                        msg.msgType !== msgType.SYS && <img className="message-avatar" src={msg.headImg}/>
                                     }
                                     {
                                         (() => {
                                             switch (msg.msgType) {
-                                            case 1:
+                                            case msgType.TEXT:
                                                 return (
                                                     <div className="message-text-wrapper">
                                                         <pre className="message-text">{msg.content}</pre>
                                                     </div>
                                                 );
-                                            case 2:
-                                                return <img className="message-img" src={msg.picUrl}/>;
-                                            case -1:
+                                            case msgType.IMG_OLD:
+                                            case msgType.IMG:
+                                                return <img className="message-img" onClick={this.handlerPreview.bind(this, msg.picUrl)} src={msg.picUrl}/>;
+                                            case msgType.SYS:
                                                 return <span className="message-sys" dangerouslySetInnerHTML={{__html: msg.content}}></span>;
                                             default:
                                                 return (
@@ -77,12 +100,15 @@ class MessageBox extends React.Component<Prop> {
                                         })()
                                     }
                                     {
-                                        msg.id < 0 && msg.msgType !== -1 && <Icon style={{color: 'red', fontSize: '16px', marginTop: '12px'}} theme="filled" type="info-circle"/>
+                                        msg.id < 0 && msg.msgType !== msgType.SYS && <Icon style={{color: 'red', fontSize: '16px', marginTop: '12px'}} theme="filled" type="info-circle"/>
                                     }
                                 </div>
                             ))
                         }
                     </div>
+                    <Modal footer={null} onCancel={this.handleCancel} visible={previewVisible}>
+                        <img alt="图片预览失败" src={previewImage} style={{ width: '100%' }} />
+                    </Modal>
                 </div>
             </Spin>
         );

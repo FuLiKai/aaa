@@ -14,7 +14,7 @@ interface Props {
 
 function ChatItem (props: Props) {
     return (
-        <div className="chat-item" onClick={() => props.onClick(props.id)}>
+        <div className="chat-item" onClick={() => props.onClick(props)}>
             <Badge count={props.status} dot>
                 <img className="chat-item-avatar" src={props.avatar}/>
             </Badge>

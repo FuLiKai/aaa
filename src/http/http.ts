@@ -3,14 +3,14 @@ import map from '../protobuf/map';
 import { Uint8ArryToString, pbEncode, pbDecode, getUrlPath } from '../util';
 import { getParamValue } from '@/util';
 import store from '@/store';
+import config from './config';
 
 let wxAlias = getParamValue('alias');
 let wxId = '';
 let cmdId = 1;
 
 const http = axios.create({
-    baseURL: 'http://47.98.131.186:8000',
-    // baseURL: 'http://hero.lukou.com:8000',
+    baseURL: `http://${config.origin}`,
     withCredentials: true,
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
